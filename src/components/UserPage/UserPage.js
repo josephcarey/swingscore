@@ -1,18 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import LogOutButton from '../LogOutButton/LogOutButton';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import LogOutButton from "../LogOutButton/LogOutButton";
 
 class UserPage extends Component {
   logout = () => {
-    this.props.dispatch({ type: 'LOGOUT' });
-  }
+    this.props.dispatch({ type: "LOGOUT" });
+  };
 
   render() {
     return (
       <div>
-        <h1 id="welcome">
-          Welcome, { this.props.user.username }!
-        </h1>
+        <h1 id="welcome">Welcome, {this.props.user.username}!</h1>
         <p>Your ID is: {this.props.user.id}</p>
         <LogOutButton className="log-in" />
       </div>
@@ -29,4 +27,3 @@ const mapStateToProps = state => ({
 
 // this allows us to use <App /> in index.js
 export default connect(mapStateToProps)(UserPage);
-
