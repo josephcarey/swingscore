@@ -11,7 +11,10 @@ router.get("/", (req, res) => {
       `
       SELECT
         "event".*,
-        json_agg( "contest") AS "contests"
+        json_agg((SELECT x FROM (SELECT
+          "contest"."id",
+          "contest"."name",
+          "event"."name" AS "event_name") AS x)) AS "contests"
       FROM "event"
       LEFT JOIN "contest" ON "event"."id" = "contest"."event_id"
       GROUP BY "event"."id";

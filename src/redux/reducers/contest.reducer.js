@@ -1,8 +1,8 @@
-const eventReducer = (state = {}, action) => {
+const contestReducer = (state = {}, action) => {
   switch (action.type) {
-    case "SET_EVENT":
+    case "SET_CONTEST":
       return action.payload;
-    case "UNSET_EVENT":
+    case "UNSET_CONTEST":
       return {};
     default:
       return state;
@@ -11,4 +11,4 @@ const eventReducer = (state = {}, action) => {
 
 // user will be on the redux state at:
 // state.user
-export default eventReducer;
+export default contestReducer;

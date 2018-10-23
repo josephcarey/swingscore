@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import axios from "axios";
 
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -10,7 +9,7 @@ import {
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
-  ExpansionPanelActions,
+  // ExpansionPanelActions,
   List,
   ListItem,
   ListItemText,
@@ -20,6 +19,8 @@ import {
 import ImageIcon from "@material-ui/icons/Image";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
+import NavbarSpacer from "../NavbarSpacer/NavbarSpacer";
+
 const styles = theme => ({
   root: {
     width: "100%",
@@ -27,51 +28,43 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
   heading: {
-    fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
+    margin: 22,
   },
 });
 
-class EventsView extends Component {
-  state = {
-    events: [],
-  };
-
+class PickContestPage extends Component {
   componentDidMount() {
-    this.getEvents();
+    this.props.dispatch({ type: "UNSET_CONTEST" });
   }
-  getEvents = async () => {
-    let response = await axios({
-      method: "GET",
-      url: "/api/event",
-    });
-    this.setState({
-      events: response.data,
-    });
-  };
 
-  handleClickFor = eventClicked => event => {
-    this.props.dispatch({ type: "SET_EVENT", payload: eventClicked });
-    this.props.history.push("/contests");
+  selectContest = contestClicked => {
+    this.props.dispatch({
+      type: "SET_CONTEST",
+      payload: contestClicked,
+    });
   };
 
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <Typography variant="h4" as="h1" color="inherit">
+        <NavbarSpacer />
+        <Typography
+          variant="h4"
+          as="h1"
+          color="inherit"
+          className={classes.heading}
+        >
           Events
         </Typography>
         {this.props.eventList.map(event => {
           return (
             <ExpansionPanel key={event.id}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography
-                  variant="h5"
-                  // className={classes.heading}
-                >
-                  {event.name}
-                </Typography>
+                {/* <Avatar>
+                  <ImageIcon />
+                </Avatar> */}
+                <Typography variant="h5">{event.name}</Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <List>
@@ -80,7 +73,7 @@ class EventsView extends Component {
                       <ListItem
                         key={contest.id}
                         button
-                        onClick={this.handleClickFor(contest)}
+                        onClick={() => this.selectContest(contest)}
                       >
                         <Avatar>
                           <ImageIcon />
@@ -94,9 +87,15 @@ class EventsView extends Component {
                   })}
                 </List>
               </ExpansionPanelDetails>
+              {/*
+              The edit / add stuff could go here
+              <ExpansionPanelActions>
+                <button>Action</button>
+              </ExpansionPanelActions> */}
             </ExpansionPanel>
           );
         })}
+        {/* <pre>{JSON.stringify(this.props, null, 2)}</pre> */}
       </div>
     );
   }
@@ -107,16 +106,16 @@ class EventsView extends Component {
 // const mapStateToProps = ({user}) => ({ user });
 const mapStateToProps = state => ({
   user: state.user,
-  event: state.event,
+  contest: state.contest,
   eventList: state.eventList,
 });
 
-EventsView.propTypes = {
+PickContestPage.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 // this allows us to use <App /> in index.js
-// export default connect(mapStateToProps)(withStyles(styles)(EventsView));
+// export default connect(mapStateToProps)(withStyles(styles)(PickContestPage));
 export default withRouter(
-  withStyles(styles)(connect(mapStateToProps)(EventsView))
+  withStyles(styles)(connect(mapStateToProps)(PickContestPage))
 );
