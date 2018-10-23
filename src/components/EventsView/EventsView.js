@@ -7,19 +7,28 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import {
   Avatar,
-  Typography,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  ExpansionPanelActions,
   List,
   ListItem,
   ListItemText,
+  Typography,
 } from "@material-ui/core";
 
 import ImageIcon from "@material-ui/icons/Image";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const styles = theme => ({
   root: {
     width: "100%",
     // maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
   },
 });
 
@@ -53,26 +62,41 @@ class EventsView extends Component {
         <Typography variant="h4" as="h1" color="inherit">
           Events
         </Typography>
-        <List>
-          {this.state.events.map(event => {
-            return (
-              <ListItem
-                key={event.id}
-                button
-                onClick={this.handleClickFor(event)}
-              >
-                <Avatar>
-                  <ImageIcon />
-                </Avatar>
-                <ListItemText
-                  primary={event.name}
-                  secondary="Cool text could go here"
-                />
-              </ListItem>
-            );
-          })}
-        </List>
-        {JSON.stringify(this.props, null, 2)}
+        {this.props.eventList.map(event => {
+          return (
+            <ExpansionPanel key={event.id}>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography
+                  variant="h5"
+                  // className={classes.heading}
+                >
+                  {event.name}
+                </Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <List>
+                  {event.contests.map(contest => {
+                    return (
+                      <ListItem
+                        key={contest.id}
+                        button
+                        onClick={this.handleClickFor(contest)}
+                      >
+                        <Avatar>
+                          <ImageIcon />
+                        </Avatar>
+                        <ListItemText
+                          primary={contest.name}
+                          secondary="Cool text could go here"
+                        />
+                      </ListItem>
+                    );
+                  })}
+                </List>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          );
+        })}
       </div>
     );
   }
@@ -84,6 +108,7 @@ class EventsView extends Component {
 const mapStateToProps = state => ({
   user: state.user,
   event: state.event,
+  eventList: state.eventList,
 });
 
 EventsView.propTypes = {

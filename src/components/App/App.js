@@ -44,6 +44,7 @@ const theme = createMuiTheme({
 class App extends Component {
   componentDidMount() {
     this.props.dispatch({ type: "FETCH_USER" });
+    this.props.dispatch({ type: "FETCH_EVENT_LIST" });
   }
 
   render() {

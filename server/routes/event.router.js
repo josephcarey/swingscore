@@ -9,8 +9,14 @@ router.get("/", (req, res) => {
   pool
     .query(
       `
-        SELECT * FROM "event"
+      SELECT
+        "event".*,
+        json_agg( "contest") AS "contests"
+      FROM "event"
+      LEFT JOIN "contest" ON "event"."id" = "contest"."event_id"
+      GROUP BY "event"."id";
     `
+      // THIS NEEDS FIXING THE WAY WE'RE USING IT
     )
     .then(results => {
       res.send(results.rows);

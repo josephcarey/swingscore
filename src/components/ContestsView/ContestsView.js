@@ -84,6 +84,7 @@ class ContestsView extends Component {
 const mapStateToProps = state => ({
   user: state.user,
   event: state.event,
+  eventList: state.eventList,
 });
 
 ContestsView.propTypes = {
