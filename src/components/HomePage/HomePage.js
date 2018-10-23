@@ -2,36 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 
 import PickContestPage from "../PickContestPage/PickContestPage";
+import RosterPage from "../RosterPage/RosterPage";
 
 const HomePage = props => {
-  return (
-    <>
-      {!props.contest.id ? (
-        <PickContestPage />
-      ) : (
-        <div>
-          <p>This</p>
-          <p>This</p>
-          <p>This</p>
-          <p>This</p>
-          <p>This</p>
-          <p>This</p>
-          <p>This</p>
-          <p>This</p>
-          <p>This</p>
-          <p>This</p>
-          <p>This</p>
-          <p>This</p>
-          <p>This</p>
-          <p>This</p>
-          <p>This</p>
-          <p>This</p>
-          <p>This</p>
-          <p>This</p>
-        </div>
-      )}
-    </>
-  );
+  return <>{!props.contest.id ? <PickContestPage /> : <RosterPage />}</>;
 };
 
 const mapStateToProps = state => ({
