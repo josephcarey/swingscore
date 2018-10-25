@@ -20,6 +20,7 @@ import ImageIcon from "@material-ui/icons/Image";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import NavbarSpacer from "../NavbarSpacer/NavbarSpacer";
+import TestDnD from "../TestDnD/TestDnD";
 
 const styles = theme => ({
   root: {
@@ -33,6 +34,10 @@ const styles = theme => ({
 });
 
 class PickContestPage extends Component {
+  componentDidMount() {
+    this.props.dispatch({ type: "FETCH_CONTEST_DETAILS" });
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -70,6 +75,7 @@ class PickContestPage extends Component {
         >
           Roster
         </Typography>
+        <TestDnD />
 
         {/* <pre>{JSON.stringify(this.props, null, 2)}</pre> */}
       </div>

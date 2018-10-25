@@ -3,9 +3,15 @@ import { connect } from "react-redux";
 
 import PickContestPage from "../PickContestPage/PickContestPage";
 import RosterPage from "../RosterPage/RosterPage";
+import TestDnD from "../TestDnD/TestDnD";
 
 const HomePage = props => {
-  return <>{!props.contest.id ? <PickContestPage /> : <RosterPage />}</>;
+  return (
+    <>
+      {/* {!props.contest.id ? <PickContestPage /> : <RosterPage />} */}
+      <TestDnD />
+    </>
+  );
 };
 
 const mapStateToProps = state => ({

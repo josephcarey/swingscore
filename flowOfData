@@ -1,0 +1,24 @@
+Each contest has participants on the "person_contest" table:
+
+id  person_id   contest_id  role
+1   1           1           'lead'
+2   2           1           'follow'
+
+
+
+Once the competition is ready to go, we tell the server to randomly pair people.
+It returns "couple" entries:
+
+id      contest_id      lead_id     follow_id
+1       1               1           2
+2       1               3           4
+
+Each judge gets all of the pairings for that contest, submits their whole array,
+and the server translates it into score objects:
+
+id      judge_id        couple_id       placement
+1       7               1               2
+
+Then at some point, the head judge tells the server to process the score
+(or it automatically does so when the last judge submits their scores).
+The scoreProcessor
