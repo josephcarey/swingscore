@@ -53,12 +53,34 @@ const getListStyle = isDraggingOver => ({
 class TestDnD extends Component {
   state = {
     items: [
-      { id: 1, content: "Jeb and Anna" },
-      { id: 2, content: "Anne and Svetlana" },
-      { id: 3, content: "Ben and Beth" },
-      { id: 4, content: "Bob and Rob" },
+      {
+        lead: {
+          username: "",
+        },
+        follow: {
+          username: "",
+        },
+      },
     ],
   };
+
+  componentDidMount() {
+    axios({
+      method: "GET",
+      url: "/api/score/1",
+    })
+      .then(response => {
+        console.log(response);
+
+        this.setState({
+          items: response.data,
+        });
+      })
+      .catch(error => {
+        alert("Something went wrong getting the couples from the server.");
+        console.log(error);
+      });
+  }
 
   onDragEnd = result => {
     // dropped outside the list
@@ -88,6 +110,22 @@ class TestDnD extends Component {
       })
       .catch(error => {
         alert("Something went wrong submitting rankings.");
+      });
+  };
+
+  handleGetResults = () => {
+    let competitionToGet = 1;
+
+    axios({
+      method: "GET",
+      url: `/api/score/results/${competitionToGet}`,
+    })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        alert("Something went wrong getting the final results.");
+        console.log(error);
       });
   };
 
@@ -128,7 +166,11 @@ class TestDnD extends Component {
                               <ImageIcon />
                             </Avatar>
                             <ListItemText
-                              primary={item.content}
+                              primary={
+                                item.lead.username +
+                                " and " +
+                                item.follow.username
+                              }
                               secondary="Cool text could go here"
                             />
                           </ListItem>
@@ -143,7 +185,7 @@ class TestDnD extends Component {
           </List>
         </DragDropContext>
         <Button onClick={this.handleSubmit}>Submit Rankings</Button>
-        <Button onClick={this.handleFinalize}>Finalize Results</Button>
+        <Button onClick={this.handleGetResults}>Get Results</Button>
       </div>
     );
   }
