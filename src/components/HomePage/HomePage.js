@@ -8,8 +8,8 @@ import TestDnD from "../TestDnD/TestDnD";
 const HomePage = props => {
   return (
     <>
-      {/* {!props.contest.id ? <PickContestPage /> : <RosterPage />} */}
-      <TestDnD />
+      {!props.contest.id ? <PickContestPage /> : <TestDnD />}
+      {/* <TestDnD /> */}
     </>
   );
 };

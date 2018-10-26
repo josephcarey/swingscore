@@ -12,7 +12,7 @@ const performRelativePlacement = scores => {
     // if the score references a couple that doesn't exist, create that couple
     if (!scoreRows.map(score => score.couple_id).includes(score.couple_id)) {
       scoreRows.push({
-        finalPlacement: "",
+        finalPlacement: 0,
         couple_id: score.couple_id,
         judgePlacements: [],
         // numberOfEachPlacement starts out with a 0 at position zero so that we
@@ -67,6 +67,15 @@ const performRelativePlacement = scores => {
   }
 
   // do the logic for relative placement
+  console.log(
+    "########## ########## ########## ########## ########## ########## ##########"
+  );
+  console.log(
+    "########## ##########   STARTING SCORING    ########## ########## ##########"
+  );
+  console.log(
+    "########## ########## ########## ########## ########## ########## ##########"
+  );
 
   // set the total number of judges
   numberOfJudges = scoreRows[0].judgePlacements.length;
@@ -74,44 +83,169 @@ const performRelativePlacement = scores => {
   // while we're at it, set the quorum
   quorum = Math.ceil(numberOfJudges / 2);
 
-  // loop through each possible placement
+  console.log(
+    "### There are",
+    numberOfJudges,
+    "judges, and the quorum is:",
+    quorum
+  );
+
+  // make a copy of the existing scores
+  let unassignedScores = scoreRows.slice(0);
+  // set up a storage for the scores we're going to return
+  let scoresToReturn = [];
+
+  // loop through each potential placement
   for (
-    let placementInQuestion = 1;
-    placementInQuestion < scoreRows.length;
-    placementInQuestion++
+    let placementToAssign = 1;
+    placementToAssign < scoreRows.length;
+    placementToAssign++
   ) {
-    // loop through each placementsAndUpToInclude, starting at 1
-    for (
-      let highestPlacementToInclude = 1;
-      highestPlacementToInclude < scoreRows.length;
-      highestPlacementToInclude++
-    ) {
-      // create a working copy of the set of score_rows
-      workingScores = scoreRows.slice(0);
-      candidateScores = [];
-      // loop through the working copy
-      for (let workingScore of workingScores) {
-        // calculate the total number of places up to placementsAndUpToInclude
-        let placementsCounted = 0;
-        for (let j = 1; j <= highestPlacementToInclude; j++) {
-          placementsCounted +=
-            workingScore.calculatedPlacements[j].countThisLevel;
-        }
-        // check that against the quorum; if it's higher, push the couple onto candidateScores
-        if (placementsCounted >= quorum) {
-          candidateScores.push(workingScore);
+    console.log("### Working on placement:", placementToAssign);
+    // make a copy of the unassignedScores for us to use below called candidateScores
+    let candidateScores = unassignedScores.slice(0);
+    console.log("### The candidates are:");
+    console.log("### Considering couples:");
+    console.log(unassignedScores.map(score => score.couple_id));
+    // set highestPlacementToInclude = 1;
+    let highestPlacementToInclude = 1;
+    // while there's any scores left in candidateScores--
+    while (candidateScores.length > 0) {
+      console.log(
+        "### Considering this place and better:",
+        highestPlacementToInclude
+      );
+      // fix this!
+      if (highestPlacementToInclude > scoreRows.length) {
+        highestPlacementToInclude--;
+        console.log(
+          "This is the really deep tie-breaker. It isn't written yet, so we just take the first one."
+        );
+        while (candidateScores.length > 1) {
+          candidateScores.pop();
         }
       }
-      // if there is only one couple left, award them the placement
+
+      // ********** FIRST PASS **********
+      // loop through the scores
+      for (let i = candidateScores.length - 1; i >= 0; i--) {
+        // if the countAndBetter is less than quorum...
+        console.log("### Considering couple:", candidateScores[i].couple_id);
+        console.log(
+          "### This score and better:",
+          candidateScores[i].calculatedPlacements[highestPlacementToInclude]
+            .sumThisLevelAndBetter
+        );
+        if (
+          candidateScores[i].calculatedPlacements[highestPlacementToInclude]
+            .sumThisLevelAndBetter < quorum
+        ) {
+          // get rid of 'em
+          console.log("### Not high enough. Remove them from consideration.");
+          candidateScores.splice(i, 1);
+        } else {
+          console.log("### They have enough of these scores. They can stay.");
+        }
+        // end loop
+      }
+      console.log(
+        "### At the end of the first pass, the following couples remain in consideration:"
+      );
+      console.log(candidateScores.map(score => score.couple_id));
+      // ********** SECOND PASS **********
+      // if there is more than one score left in candidateScores--
+      if (candidateScores.length > 1) {
+        console.log(
+          "### More than one couple left in consideration. Try to break the tie."
+        );
+        // if any have fewer than any of the others, eliminate those
+        // set a highestCount
+        let highestCount = 0;
+        // loop through each candidate score
+        for (i = candidateScores.length - 1; i >= 0; i--) {
+          console.log("### Considering couple:", candidateScores[i].couple_id);
+          console.log("### Highest count is:", highestCount);
+          // if the candidate score count is better than highest count (or equal)
+          if (
+            candidateScores[i].calculatedPlacements.countThisLevelAndBetter >=
+            highestCount
+          ) {
+            console.log("### They had a higher count.");
+            // set highestCount to that (equal sets to the same, but doesn't get eliminated)
+            highestCount =
+              candidateScores[i].calculatedPlacements.countThisLevelAndBetter;
+            console.log("### highestCount set to:", highestCount);
+          } else {
+            console.log("### They had a lower count and will be removed.");
+            // if not, eliminate that score from consideration
+            candidateScores.splice(i, 1);
+          }
+        }
+        // if any have lower "quality" scores, eliminate those
+        // set a highestSum
+        let highestSum = 0;
+        // loop through each remaining candidate score
+        for (i = candidateScores.length - 1; i >= 0; i--) {
+          console.log("### Considering couple:", candidateScores[i].couple_id);
+          console.log("### Highest sum is:", highestSum);
+          // if the candidate score sum is better than highest sum (or equal)
+          if (
+            candidateScores[i].calculatedPlacements.sumThisLevelAndBetter >=
+            highestSum
+          ) {
+            console.log("### They had a higher sum.");
+            highestSum =
+              candidateScores[i].calculatedPlacements.sumThisLevelAndBetter;
+            console.log("### highestSum set to:", highestSum);
+            // set highestSum to that (equal sets to same number to avoid getting spliced)
+          } else {
+            console.log("### They had a lower sum and will be removed.");
+            candidateScores.splice(i, 1);
+          }
+        }
+      }
+      console.log(
+        "### At the end of the second pass, the following couples remain in consideration:"
+      );
+      console.log(candidateScores.map(score => score.couple_id));
+      // ********** STEP 3 **********
+      // if there is exactly one score left
+      if (candidateScores.length === 1) {
+        console.log("### There is exactly one couple left!");
+        console.log(
+          "### They should be assigned placement:",
+          placementToAssign
+        );
+        // push it into scoresToReturn
+        scoresToReturn.push({
+          ...candidateScores[0],
+          finalPlacement: placementToAssign,
+        });
+        // remove it from unassignedScores
+        // loop through unassignedScores
+        for (i = unassignedScores.length - 1; i >= 0; i--) {
+          // if this is the correct entry (couple_id is unique)
+          if (unassignedScores[i].couple_id == candidateScores[0].couple_id) {
+            // slice out the one we just assigned
+            unassignedScores.splice(i, 1);
+          }
+        }
+        // pop it out of candidateScores--after this candidateScores should be empty
+        candidateScores.pop();
+      }
+      // ********** TIDY UP **********
+      // in case we're going a level deeper, increment highestPlacementToInclude
+      highestPlacementToInclude++;
+      // the while loop finishes--
+      //  if there are 0, it means we assigned the placement; the while
+      // -- is concluded and doesn't run, so the loop increments and does the next placement
+      // if there are >1, it means that we need to examine the next placement down.
     }
   }
-  // if there is more than one couple left, one of them should be awarded the placement;
-  // next step is to check the quality of each of their scores (sum of )
-  // failing that, we use the head judge score
-  // if no one has been awarded, go increment placementsAndUp and move on
-  //
 
-  return scoreRows;
+  console.log(scoresToReturn);
+  // return scoreRows;
+  return scoresToReturn;
 };
 
 module.exports = performRelativePlacement;

@@ -52,6 +52,7 @@ const getListStyle = isDraggingOver => ({
 
 class TestDnD extends Component {
   state = {
+    results: [],
     items: [
       {
         lead: {
@@ -122,6 +123,7 @@ class TestDnD extends Component {
     })
       .then(response => {
         console.log(response.data);
+        this.setState({ results: response.data });
       })
       .catch(error => {
         alert("Something went wrong getting the final results.");
@@ -186,6 +188,7 @@ class TestDnD extends Component {
         </DragDropContext>
         <Button onClick={this.handleSubmit}>Submit Rankings</Button>
         <Button onClick={this.handleGetResults}>Get Results</Button>
+        <pre>{JSON.stringify(this.state, null, 2)}</pre>
       </div>
     );
   }
