@@ -105,8 +105,8 @@ router.get("/results/:id", (req, res) => {
       [req.params.id]
     )
     .then(results => {
-      console.log("!!! Information retrieved, pre-scoring:");
-      console.log(results.rows);
+      // console.log("!!! Information retrieved, pre-scoring:");
+      // console.log(results.rows);
       let contestResults = performRelativePlacement(results.rows);
       res.send(contestResults);
     })

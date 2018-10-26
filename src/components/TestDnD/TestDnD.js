@@ -146,7 +146,7 @@ class TestDnD extends Component {
                 >
                   {this.state.items.map((item, index) => (
                     <Draggable
-                      key={item.id}
+                      key={item.couple_id}
                       draggableId={item.id}
                       index={index}
                     >
@@ -170,7 +170,7 @@ class TestDnD extends Component {
                             <ListItemText
                               primary={
                                 item.lead.username +
-                                " and " +
+                                " + " +
                                 item.follow.username
                               }
                               secondary="Cool text could go here"
