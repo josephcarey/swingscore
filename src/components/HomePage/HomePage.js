@@ -4,11 +4,13 @@ import { connect } from "react-redux";
 import PickContestPage from "../PickContestPage/PickContestPage";
 import RosterPage from "../RosterPage/RosterPage";
 import TestDnD from "../TestDnD/TestDnD";
+import ResultsView from "../ResultsView/ResultsView";
 
 const HomePage = props => {
   return (
     <>
-      {!props.contest.id ? <PickContestPage /> : <TestDnD />}
+      <ResultsView />
+      {/* {!props.contest.id ? <PickContestPage /> : <TestDnD />} */}
       {/* <TestDnD /> */}
     </>
   );
