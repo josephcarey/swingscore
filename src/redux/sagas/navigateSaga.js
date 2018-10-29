@@ -1,4 +1,5 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { put, takeLatest, select } from "redux-saga/effects";
+import { getSelectedContest } from "../selectors/index.selectors";
 
 function* NavigateTo(action) {
   yield put({ type: "SET_LOADING" });
@@ -9,6 +10,16 @@ function* NavigateTo(action) {
       break;
     case "selectContest":
       yield put({ type: "SET_CURRENT_PAGE", payload: action.payload });
+      break;
+    case "correctView":
+      const selectedContest = yield select(getSelectedContest);
+      if (selectedContest.has_ended) {
+        yield put({ type: "SET_CURRENT_PAGE", payload: "results" });
+      } else if (selectedContest.has_started) {
+        yield put({ type: "SET_CURRENT_PAGE", payload: "judge" });
+      } else {
+        yield put({ type: "SET_CURRENT_PAGE", payload: "roster" });
+      }
       break;
     case "results":
       yield put({ type: "SET_CURRENT_PAGE", payload: action.payload });

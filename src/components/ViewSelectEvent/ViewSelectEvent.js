@@ -6,6 +6,7 @@ import MyList from "../MyList/MyList";
 class ViewSelectEvent extends Component {
   selectEvent = eventSelected => {
     this.props.dispatch({ type: "SET_SELECTED_EVENT", payload: eventSelected });
+    this.props.dispatch({ type: "UNSET_SELECTED_CONTEST" });
     this.props.dispatch({ type: "NAVIGATE_TO", payload: "selectContest" });
   };
 
@@ -13,8 +14,8 @@ class ViewSelectEvent extends Component {
     return (
       <>
         <MyList
-          heading={"Select Event"}
-          subheading={"Pick a cool event!"}
+          heading={"swingscore"}
+          subheading={"Select an event"}
           list={this.props.eventList}
           handleClick={this.selectEvent}
         />

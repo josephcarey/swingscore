@@ -19,9 +19,6 @@ import {
   Tooltip,
 } from "@material-ui/core";
 
-import ImageIcon from "@material-ui/icons/Image";
-import NavbarSpacer from "../NavbarSpacer/NavbarSpacer";
-
 const styles = theme => ({
   centered: {
     textAlign: "center",
@@ -71,7 +68,6 @@ class ResultsView extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <NavbarSpacer />
         <Typography variant="h5">Results</Typography>
         <Table padding="dense">
           <TableHead>

@@ -13,7 +13,7 @@ import {
 import { connect } from "react-redux";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import NavTop from "../NavTop/NavTop";
+import Nav from "../Nav/Nav";
 import ViewPagePicker from "../ViewPagePicker/ViewPagePicker";
 
 // Material-UI
@@ -46,7 +46,7 @@ class App extends Component {
         <div>
           <MuiThemeProvider theme={theme}>
             <CssBaseline />
-            <NavTop />
+            <Nav />
             <Switch>
               {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
               <Redirect exact from="/" to="/home" />

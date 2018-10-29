@@ -12,15 +12,15 @@ class ViewSelectContest extends Component {
   }
   selectContest = contest => {
     this.props.dispatch({ type: "SET_SELECTED_CONTEST", payload: contest });
-    this.props.dispatch({ type: "NAVIGATE_TO", payload: "selectContest" });
+    this.props.dispatch({ type: "NAVIGATE_TO", payload: "correctView" });
   };
 
   render() {
     return (
       <>
         <MyList
-          heading={"Select Contest"}
-          subheading={this.props.selectedEvent.name}
+          heading={this.props.selectedEvent.name}
+          subheading={"Select contest"}
           list={this.props.contestList}
           handleClick={this.selectContest}
         />
