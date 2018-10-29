@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import NavTop from "../NavTop/NavTop";
+import Nav from "../Nav/Nav";
 import ViewLoading from "../ViewLoading/ViewLoading";
 import ViewSelectEvent from "../ViewSelectEvent/ViewSelectEvent";
 import ViewSelectContest from "../ViewSelectContest/ViewSelectContest";
@@ -12,7 +12,7 @@ import ViewRoster from "../ViewRoster/ViewRoster";
 const ViewPagePicker = props => {
   return (
     <>
-      <NavTop />
+      <Nav />
       {props.loading ? (
         <ViewLoading />
       ) : (
@@ -22,7 +22,7 @@ const ViewPagePicker = props => {
           {props.currentPage === "results" && <ViewResults />}
           {props.currentPage === "judge" && <ViewJudge />}
           {props.currentPage === "roster" && <ViewRoster />}
-          <pre>{JSON.stringify(props, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(props, null, 2)}</pre> */}
         </>
       )}
     </>

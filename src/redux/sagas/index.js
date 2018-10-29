@@ -3,7 +3,8 @@ import loginSaga from "./loginSaga";
 import registrationSaga from "./registrationSaga";
 import userSaga from "./userSaga";
 import navigateSaga from "./navigateSaga";
-import eventListSaga from "./eventListSaga";
+import eventListSaga from "./eventList.saga";
+import contestListSaga from "./contestList.saga";
 import contestDetailsSaga from "./contestDetailsSaga";
 
 // rootSaga is the primary saga.
@@ -20,6 +21,7 @@ export default function* rootSaga() {
     userSaga(),
     navigateSaga(),
     eventListSaga(),
+    contestListSaga(),
     contestDetailsSaga(),
   ]);
 }

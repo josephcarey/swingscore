@@ -15,6 +15,12 @@ const styles = theme => ({
   heading: {
     padding: 16,
   },
+  subheading: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 8,
+    paddingBottom: 8,
+  },
 });
 
 const MyList = props => {
@@ -26,13 +32,16 @@ const MyList = props => {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <div className={classes.heading}>
-        {props.headingLarge ? (
+      {props.heading && (
+        <div className={classes.heading}>
           <Typography variant="h4">{props.heading}</Typography>
-        ) : (
-          <Typography variant="h6">{props.heading}</Typography>
-        )}
-      </div>
+        </div>
+      )}
+      {props.subheading && (
+        <div className={classes.subheading}>
+          <Typography variant="h6">{props.subheading}</Typography>
+        </div>
+      )}
       <List>
         {props.list.map(listItem => {
           return (

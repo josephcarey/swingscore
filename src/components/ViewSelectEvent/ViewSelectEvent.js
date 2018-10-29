@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import MyList from "../MyList/MyList";
 
 class ViewSelectEvent extends Component {
-  selectEvent = event => {
-    this.props.dispatch({ type: "SET_EVENT", payload: event });
+  selectEvent = eventSelected => {
+    this.props.dispatch({ type: "SET_SELECTED_EVENT", payload: eventSelected });
     this.props.dispatch({ type: "NAVIGATE_TO", payload: "selectContest" });
   };
 
@@ -14,7 +14,7 @@ class ViewSelectEvent extends Component {
       <>
         <MyList
           heading={"Select Event"}
-          headingLarge
+          subheading={"Pick a cool event!"}
           list={this.props.eventList}
           handleClick={this.selectEvent}
         />

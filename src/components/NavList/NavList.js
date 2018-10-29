@@ -1,21 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
 
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
-import {
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemSecondaryAction,
-  ListItemText,
-  Typography,
-} from "@material-ui/core/";
-
-import SettingsIcon from "@material-ui/icons/Settings";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { List, ListItem, ListItemText } from "@material-ui/core/";
 
 const styles = {
   userDetail: {
@@ -27,7 +15,7 @@ const styles = {
     width: "100%",
   },
   list: {
-    width: 250,
+    width: 240,
   },
 };
 
@@ -35,125 +23,64 @@ const NavList = props => {
   const { classes } = props;
   return (
     <div className={classes.list}>
-      <div className={classes.userDetail}>
-        <Typography variant="h4">{props.user.username}</Typography>
-      </div>
-      <Divider />
       <List>
         <ListItem
           button
           onClick={() => {
-            props.dispatch({
-              type: "NAVIGATE_TO",
-              payload: "selectEvent",
-            });
-            props.closeDrawer();
+            props.navigateTo("selectEvent");
           }}
         >
-          <ListItemText primary="Event" secondary="Click to select" />
+          <ListItemText
+            primary={
+              props.selectedEvent.name
+                ? props.selectedEvent.name
+                : "No Event Selected"
+            }
+            secondary="Click to select"
+          />
         </ListItem>
-
         <ListItem
           button
+          disabled={!props.selectedEvent.id}
           onClick={() => {
-            props.dispatch({
-              type: "NAVIGATE_TO",
-              payload: "selectContest",
-            });
-            props.closeDrawer();
+            props.navigateTo("selectContest");
           }}
         >
-          <ListItemText primary="Contest" secondary="Click to select" />
+          <ListItemText
+            primary={
+              props.selectedContest.name
+                ? props.selectedContest.name
+                : "No Contest Selected"
+            }
+            secondary="Click to select"
+          />
         </ListItem>
-        {/* </List>
-      <div className={classes.contestDetail}>
-        <Typography variant="overline">Contest:</Typography>
-        <Typography variant="h5">
-          {props.contest.name ? props.contest.name : "None"}
-        </Typography>
-      </div>
-      <List> */}
-        <ListItem button disabled={!props.contest.id}>
-          <ListItemText>
-            Roster
-            {/* <NavLink
-            to={`/cart`}
-            activeStyle={{
-              fontWeight: "bold",
-              color: "red"
-            }}
-          >
-            Cart
-          </NavLink> */}
-          </ListItemText>
+        <ListItem
+          button
+          disabled={!props.selectedContest.id}
+          onClick={() => {
+            props.navigateTo("roster");
+          }}
+        >
+          <ListItemText>Roster</ListItemText>
         </ListItem>
-        <ListItem button disabled={!props.contest.id}>
-          <ListItemText>
-            Judge
-            {/* <NavLink
-            to={`/cart`}
-            activeStyle={{
-              fontWeight: "bold",
-              color: "red"
-            }}
-          >
-            Cart
-          </NavLink> */}
-          </ListItemText>
+        <ListItem
+          button
+          disabled={!props.selectedContest.id}
+          onClick={() => {
+            props.navigateTo("judge");
+          }}
+        >
+          <ListItemText>Judge</ListItemText>
         </ListItem>
-        <ListItem button disabled={!props.contest.id}>
-          <ListItemText>
-            Results
-            {/* <NavLink
-            to={`/cart`}
-            activeStyle={{
-              fontWeight: "bold",
-              color: "red"
-            }}
-          >
-            Cart
-          </NavLink> */}
-          </ListItemText>
-        </ListItem>
-
-        <Divider />
-        <ListItem button>
-          <ListItemText>
-            Edit User
-            {/* <NavLink
-            to={`/cart`}
-            activeStyle={{
-              fontWeight: "bold",
-              color: "red"
-            }}
-          >
-            Cart
-          </NavLink> */}
-          </ListItemText>
-          <ListItemSecondaryAction>
-            <ListItemIcon>
-              <SettingsIcon />
-            </ListItemIcon>
-          </ListItemSecondaryAction>
-        </ListItem>
-        <ListItem button onClick={() => props.dispatch({ type: "LOGOUT" })}>
-          <ListItemText>
-            Log Out
-            {/* <NavLink
-            to={`/cart`}
-            activeStyle={{
-              fontWeight: "bold",
-              color: "red"
-            }}
-          >
-            Cart
-          </NavLink> */}
-          </ListItemText>
-          <ListItemSecondaryAction>
-            <ListItemIcon>
-              <ExitToAppIcon />
-            </ListItemIcon>
-          </ListItemSecondaryAction>
+        <ListItem
+          button
+          disabled={!props.selectedContest.id}
+          onClick={() => {
+            props.navigateTo("results");
+          }}
+        >
+          <ListItemText>Results</ListItemText>
         </ListItem>
       </List>
     </div>
@@ -164,10 +91,4 @@ NavList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  currentPage: state.currentPage,
-  user: state.user,
-  contest: state.contest,
-});
-
-export default connect(mapStateToProps)(withStyles(styles)(NavList));
+export default withStyles(styles)(NavList);
