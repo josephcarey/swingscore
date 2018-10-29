@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import { Avatar, ListItem, ListItemText } from "@material-ui/core";
 
