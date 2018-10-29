@@ -13,11 +13,10 @@ const ViewPagePicker = props => {
   return (
     <>
       <NavTop />
-      {!props.loading ? (
+      {props.loading ? (
         <ViewLoading />
       ) : (
         <>
-          <p>VIEWPAGEPICKER</p>
           {props.currentPage === "selectEvent" && <ViewSelectEvent />}
           {props.currentPage === "selectContest" && <ViewSelectContest />}
           {props.currentPage === "results" && <ViewResults />}

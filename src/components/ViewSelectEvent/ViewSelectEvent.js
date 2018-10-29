@@ -1,11 +1,31 @@
-import React from "react";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-const ViewSelectEvent = props => {
-  return (
-    <div>
-      <h3>ViewSelectEvent</h3>
-    </div>
-  );
-};
+import MyList from "../MyList/MyList";
 
-export default ViewSelectEvent;
+class ViewSelectEvent extends Component {
+  selectEvent = event => {
+    this.props.dispatch({ type: "SET_EVENT", payload: event });
+    this.props.dispatch({ type: "NAVIGATE_TO", payload: "selectContest" });
+  };
+
+  render() {
+    return (
+      <>
+        <MyList
+          heading={"Select Event"}
+          headingLarge
+          list={this.props.eventList}
+          handleClick={this.selectEvent}
+        />
+      </>
+    );
+  }
+}
+
+const mapStateToProps = state => ({
+  user: state.user,
+  eventList: state.eventList,
+});
+
+export default connect(mapStateToProps)(ViewSelectEvent);

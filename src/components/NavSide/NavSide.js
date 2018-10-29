@@ -13,7 +13,7 @@ class NavSide extends Component {
           onClose={this.props.setDrawer(false)}
           onOpen={this.props.setDrawer(true)}
         >
-          <NavList />
+          <NavList closeDrawer={this.props.setDrawer(false)} />
         </SwipeableDrawer>
       </header>
     );

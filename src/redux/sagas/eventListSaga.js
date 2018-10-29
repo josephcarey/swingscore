@@ -12,6 +12,7 @@ function* fetchEventList(action) {
     console.log("Error with getting the list of events:");
     console.log(error);
   }
+  yield put({ type: "UNSET_LOADING" });
 }
 
 function* eventListSaga() {

@@ -40,14 +40,27 @@ const NavList = props => {
       </div>
       <Divider />
       <List>
-        <ListItem button>
+        <ListItem
+          button
+          onClick={() => {
+            props.dispatch({
+              type: "NAVIGATE_TO",
+              payload: "selectEvent",
+            });
+            props.closeDrawer();
+          }}
+        >
           <ListItemText primary="Event" secondary="Click to select" />
         </ListItem>
 
         <ListItem
           button
           onClick={() => {
-            console.log("clicked!");
+            props.dispatch({
+              type: "NAVIGATE_TO",
+              payload: "selectContest",
+            });
+            props.closeDrawer();
           }}
         >
           <ListItemText primary="Contest" secondary="Click to select" />
@@ -123,7 +136,7 @@ const NavList = props => {
             </ListItemIcon>
           </ListItemSecondaryAction>
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => props.dispatch({ type: "LOGOUT" })}>
           <ListItemText>
             Log Out
             {/* <NavLink

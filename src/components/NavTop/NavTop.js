@@ -3,16 +3,9 @@ import { connect } from "react-redux";
 
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import {
-  AppBar,
-  Button,
-  IconButton,
-  Toolbar,
-  Typography,
-} from "@material-ui/core/";
+import { AppBar, IconButton, Toolbar, Typography } from "@material-ui/core/";
 import MenuIcon from "@material-ui/icons/Menu";
 
-import LogOutButton from "../LogOutButton/LogOutButton";
 import NavSpacer from "../NavSpacer/NavSpacer";
 import NavSide from "../NavSide/NavSide";
 

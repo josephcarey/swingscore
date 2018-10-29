@@ -19,8 +19,6 @@ import {
 import ImageIcon from "@material-ui/icons/Image";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import NavbarSpacer from "../NavbarSpacer/NavbarSpacer";
-
 const styles = theme => ({
   root: {
     width: "100%",
@@ -33,9 +31,9 @@ const styles = theme => ({
 });
 
 class PickContestPage extends Component {
-  componentDidMount() {
-    this.props.dispatch({ type: "UNSET_CONTEST" });
-  }
+  // componentDidMount() {
+
+  // }
 
   selectContest = contestClicked => {
     this.props.dispatch({
@@ -48,7 +46,6 @@ class PickContestPage extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        <NavbarSpacer />
         <Typography
           variant="h4"
           as="h1"
