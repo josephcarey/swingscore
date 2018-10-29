@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 
 import {
-  Button,
   Divider,
   List,
   ListItem,
@@ -15,7 +14,6 @@ import {
   Typography,
 } from "@material-ui/core/";
 
-import ImageIcon from "@material-ui/icons/Image";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
@@ -43,42 +41,25 @@ const NavList = props => {
       <Divider />
       <List>
         <ListItem button>
-          <ListItemText>
-            Select Event
-            {/* <NavLink
-            to={`/`}
-            exact
-            activeStyle={{
-              fontWeight: "bold",
-              color: "red"
-            }}
-          >
-            Store
-          </NavLink> */}
-          </ListItemText>
+          <ListItemText primary="Event" secondary="Click to select" />
         </ListItem>
-        <ListItem button>
-          <ListItemText>
-            Select Contest
-            {/* <NavLink
-              to={`/admin`}
-              activeStyle={{
-                fontWeight: "bold",
-                color: "red"
-              }}
-            >
-              Admin
-            </NavLink> */}
-          </ListItemText>
+
+        <ListItem
+          button
+          onClick={() => {
+            console.log("clicked!");
+          }}
+        >
+          <ListItemText primary="Contest" secondary="Click to select" />
         </ListItem>
-      </List>
+        {/* </List>
       <div className={classes.contestDetail}>
-        <Typography variant="overline">Selected:</Typography>
+        <Typography variant="overline">Contest:</Typography>
         <Typography variant="h5">
           {props.contest.name ? props.contest.name : "None"}
         </Typography>
       </div>
-      <List>
+      <List> */}
         <ListItem button disabled={!props.contest.id}>
           <ListItemText>
             Roster

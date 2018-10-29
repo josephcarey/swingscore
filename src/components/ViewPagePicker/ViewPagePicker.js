@@ -13,24 +13,17 @@ const ViewPagePicker = props => {
   return (
     <>
       <NavTop />
-      {this.props.loading ? (
+      {!props.loading ? (
         <ViewLoading />
       ) : (
         <>
-          {() => {
-            switch (props.currentPage) {
-              case "selectEvent":
-                return <ViewSelectEvent />;
-              case "selectContest":
-                return <ViewSelectContest />;
-              case "results":
-                return <ViewResults />;
-              case "judge":
-                return <ViewJudge />;
-              case "roster":
-                return <ViewRoster />;
-            }
-          }}
+          <p>VIEWPAGEPICKER</p>
+          {props.currentPage === "selectEvent" && <ViewSelectEvent />}
+          {props.currentPage === "selectContest" && <ViewSelectContest />}
+          {props.currentPage === "results" && <ViewResults />}
+          {props.currentPage === "judge" && <ViewJudge />}
+          {props.currentPage === "roster" && <ViewRoster />}
+          <pre>{JSON.stringify(props, null, 2)}</pre>
         </>
       )}
     </>

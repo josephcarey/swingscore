@@ -13,6 +13,7 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 
 import LogOutButton from "../LogOutButton/LogOutButton";
+import NavSpacer from "../NavSpacer/NavSpacer";
 import NavSide from "../NavSide/NavSide";
 
 const styles = {
@@ -49,6 +50,7 @@ class NavTop extends Component {
     const { classes } = this.props;
     return (
       <div className={classes.root}>
+        <NavSpacer />
         <AppBar position="fixed">
           <Toolbar>
             <IconButton
