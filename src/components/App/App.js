@@ -12,8 +12,7 @@ import {
 // Redux
 import { connect } from "react-redux";
 
-// import Nav from "../Nav/Nav";
-import Nav from "../Nav/Nav";
+import NavTop from "../NavTop/NavTop";
 import Footer from "../Footer/Footer";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
@@ -50,7 +49,7 @@ class App extends Component {
         <div>
           <MuiThemeProvider theme={theme}>
             <CssBaseline />
-            <Nav />
+            <NavTop />
             <Switch>
               {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
               <Redirect exact from="/" to="/home" />

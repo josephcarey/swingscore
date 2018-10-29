@@ -7,6 +7,8 @@ const performRelativePlacement = scores => {
 
   // CURRENT PROBLEM: It doesn't try deeper into a scoring
 
+  console.log(scores);
+
   let scoreRows = [];
 
   // loop through all of the scores we got
@@ -16,6 +18,8 @@ const performRelativePlacement = scores => {
       scoreRows.push({
         finalPlacement: 0,
         couple_id: score.couple_id,
+        lead: score.lead,
+        follow: score.follow,
         judgePlacements: [],
         // numberOfEachPlacement starts out with a 0 at position zero so that we
         // can be 1-indexed later
@@ -28,6 +32,7 @@ const performRelativePlacement = scores => {
         currentScoreRow.judgePlacements.push({
           placement: score.placement,
           judge_id: score.judge_id,
+          judge: score.judge,
         });
       }
     }

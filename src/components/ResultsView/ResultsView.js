@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 import axios from "axios";
 
 import {
@@ -18,12 +20,31 @@ import {
 } from "@material-ui/core";
 
 import ImageIcon from "@material-ui/icons/Image";
-
 import NavbarSpacer from "../NavbarSpacer/NavbarSpacer";
+
+const styles = theme => ({
+  centered: {
+    textAlign: "center",
+  },
+  dividerLeft: {
+    borderLeft: `1px solid
+    ${theme.palette.divider}`,
+  },
+  name: {
+    whiteSpace: "nowrap",
+  },
+});
 
 class ResultsView extends Component {
   state = {
-    results: [{ judgePlacements: [], calculatedPlacements: [] }],
+    results: [
+      {
+        lead: { username: "" },
+        follow: { username: "" },
+        judgePlacements: [],
+        calculatedPlacements: [],
+      },
+    ],
   };
   componentDidMount() {
     this.handleGetResults();
@@ -47,17 +68,29 @@ class ResultsView extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
         <NavbarSpacer />
         <Typography variant="h5">Results</Typography>
-        <Table>
+        <Table padding="dense">
           <TableHead>
             <TableRow>
-              <TableCell>Placement</TableCell>
-              <TableCell>Couple ID</TableCell>
-              {this.state.results[0].judgePlacements.map(judge => {
-                return <TableCell>Judge {judge.judge_id}</TableCell>;
+              <TableCell className={classes.centered}>Final</TableCell>
+              <TableCell>Lead</TableCell>
+              <TableCell>Follow</TableCell>
+              {this.state.results[0].judgePlacements.map((judge, index) => {
+                return (
+                  <TableCell
+                    className={
+                      index < 1
+                        ? (classes.centered, classes.dividerLeft)
+                        : classes.centered
+                    }
+                  >
+                    {judge.judge.username}
+                  </TableCell>
+                );
               })}
               {this.state.results[0].calculatedPlacements.map(
                 (calculated, index) => {
@@ -65,16 +98,26 @@ class ResultsView extends Component {
                     case 0:
                       return null;
                     case 1:
-                      return <TableCell>1sts</TableCell>;
-                    case 2:
-                      return <TableCell>2nds</TableCell>;
-                    case 3:
-                      return <TableCell>3rds</TableCell>;
+                      return (
+                        <TableCell
+                          className={[classes.dividerLeft, classes.centered]}
+                          padding="none"
+                        >
+                          1s
+                        </TableCell>
+                      );
+                    // case 2:
+                    //   return (
+                    //     <TableCell className={classes.centered}>2nds</TableCell>
+                    //   );
+                    // case 3:
+                    //   return (
+                    //     <TableCell className={classes.centered}>3rds</TableCell>
+                    //   );
                     default:
                       return (
-                        <TableCell>
-                          {index}
-                          ths
+                        <TableCell className={classes.centered}>
+                          {index}s{/* ths */}
                         </TableCell>
                       );
                   }
@@ -87,21 +130,57 @@ class ResultsView extends Component {
           <TableBody>
             {this.state.results.map(result => {
               return (
-                <TableRow>
-                  <TableCell>{result.finalPlacement}</TableCell>
-                  <TableCell>{result.couple_id}</TableCell>
+                <TableRow hover>
+                  <TableCell className={classes.centered}>
+                    {result.finalPlacement}
+                  </TableCell>
+                  <TableCell className={classes.name}>
+                    {result.lead.username}
+                  </TableCell>
+                  <TableCell className={classes.name}>
+                    {result.follow.username}
+                  </TableCell>
                   {/* These aren't sorted! We are relying on them coming from the server sorted. Fix that. */}
-                  {result.judgePlacements.map(judgePlacement => {
-                    return <TableCell>{judgePlacement.placement}</TableCell>;
+                  {result.judgePlacements.map((judgePlacement, j) => {
+                    return (
+                      <TableCell
+                        className={
+                          j < 1
+                            ? [classes.centered, classes.dividerLeft]
+                            : classes.centered
+                        }
+                      >
+                        {judgePlacement.placement}
+                      </TableCell>
+                    );
                   })}
                   {result.calculatedPlacements.map((calculated, index) => {
                     return index > 0 ? (
-                      <TableCell>
-                        <Tooltip title="Add" placement="right">
-                          {calculated.countThisLevelAndBetter} (
-                          {calculated.sumThisLevelAndBetter})
-                        </Tooltip>
-                      </TableCell>
+                      <Tooltip
+                        title={"Sum: " + calculated.sumThisLevelAndBetter}
+                        // title={result.judgePlacements.map(judgePlacement => {
+                        //   if (judgePlacement.placement <= index) {
+                        //     return (
+                        //       <div>
+                        //         {judgePlacement.judge.username}:{" "}
+                        //         {judgePlacement.placement}
+                        //       </div>
+                        //     );
+                        //   } else {
+                        //     return null;
+                        //   }
+                        // })}
+                        placement="right"
+                      >
+                        <TableCell
+                          className={
+                            index < 2 && [classes.dividerLeft, classes.centered]
+                          }
+                        >
+                          {calculated.countThisLevelAndBetter}
+                          {/* ({calculated.sumThisLevelAndBetter}) */}
+                        </TableCell>
+                      </Tooltip>
                     ) : null;
                   })}
                 </TableRow>
@@ -115,4 +194,8 @@ class ResultsView extends Component {
   }
 }
 
-export default ResultsView;
+ResultsView.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(ResultsView);
