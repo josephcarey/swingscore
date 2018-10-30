@@ -1,12 +1,10 @@
-const startingRoster = [
-  {
-    leads: [],
-    follows: [],
-    judges: [],
-  },
-];
+const startingRoster = {
+  leads: [],
+  follows: [],
+  judges: [],
+};
 
-const contestRosterReducer = (state = {}, action) => {
+const contestRosterReducer = (state = startingRoster, action) => {
   switch (action.type) {
     case "SET_CONTEST_ROSTER":
       return action.payload;

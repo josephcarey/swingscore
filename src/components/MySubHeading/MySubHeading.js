@@ -8,10 +8,12 @@ import { Typography } from "@material-ui/core";
 const styles = theme => ({
   root: {
     width: "100%",
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingTop: 8,
-    paddingBottom: 8,
+  },
+  subheading: {
+    paddingTop: theme.spacing.unit * 1,
+    paddingBottom: theme.spacing.unit * 1,
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
   },
 });
 
@@ -19,14 +21,16 @@ const MySubHeading = props => {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <Typography variant="h6">{props.text}</Typography>
+      <Typography className={classes.subheading} variant="h6">
+        {props.text}
+      </Typography>
     </div>
   );
 };
 
 MySubHeading.propTypes = {
   classes: PropTypes.object.isRequired,
-  text: PropTypes.object.isRequired,
+  text: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(MySubHeading);

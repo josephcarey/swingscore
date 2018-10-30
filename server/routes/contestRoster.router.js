@@ -3,6 +3,8 @@ const pool = require("../modules/pool");
 const router = express.Router();
 
 router.get("/:id", (req, res) => {
+  console.log(req.params.id);
+
   pool
     .query(
       `

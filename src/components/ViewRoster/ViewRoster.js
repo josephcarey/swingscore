@@ -4,25 +4,41 @@ import { connect } from "react-redux";
 import MyHeading from "../MyHeading/MyHeading";
 import MySubHeading from "../MySubHeading/MySubHeading";
 import MyList from "../MyList/MyList";
+import RosterAddButton from "../RosterAddButton/RosterAddButton";
 
 class ViewRoster extends Component {
   componentDidMount() {
     this.props.dispatch({
       type: "FETCH_CONTEST_ROSTER",
-      payload: this.props.selectedEvent.id,
+      payload: this.props.selectedContest.id,
     });
   }
 
   render() {
     return (
       <div>
-        {/* <MyList
-          heading={this.props.selectedEvent.name}
-          subheading={"Select contest"}
-          list={this.props.contestRoster}
-          handleClick={this.selectContest}
-        /> */}
-        <pre>{JSON.stringify(this.props, null, 2)}</pre>
+        <MyHeading text={this.props.selectedContest.name} />
+        <MySubHeading text={"Leads"} />
+        <MyList
+          people
+          list={this.props.contestRoster.leads}
+          // handleClick={this.selectContest}
+        />
+        <RosterAddButton>Add Lead</RosterAddButton>
+        <MySubHeading text={"Follows"} />
+        <MyList
+          people
+          list={this.props.contestRoster.follows}
+          // handleClick={this.selectContest}
+        />
+        <RosterAddButton>Add Follow</RosterAddButton>
+        <MySubHeading text={"Judges"} />
+        <MyList
+          people
+          list={this.props.contestRoster.judges}
+          // handleClick={this.selectContest}
+        />
+        <RosterAddButton>Add Judge</RosterAddButton>
       </div>
     );
   }

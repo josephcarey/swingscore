@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { List } from "@material-ui/core";
 
 import MyListItem from "../MyListItem/MyListItem";
+import MyListItemPerson from "../MyListItemPerson/MyListItemPerson";
 
 const styles = theme => ({
   root: {
@@ -21,17 +22,31 @@ const MyList = props => {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <List>
-        {props.list.map(listItem => {
-          return (
-            <MyListItem
-              key={listItem.id}
-              item={listItem}
-              handleClick={props.handleClick}
-            />
-          );
-        })}
-      </List>
+      {props.people ? (
+        <List>
+          {props.list.map(listItem => {
+            return (
+              <MyListItemPerson
+                key={listItem.id}
+                item={listItem}
+                handleClick={props.handleClick}
+              />
+            );
+          })}
+        </List>
+      ) : (
+        <List>
+          {props.list.map(listItem => {
+            return (
+              <MyListItem
+                key={listItem.id}
+                item={listItem}
+                handleClick={props.handleClick}
+              />
+            );
+          })}
+        </List>
+      )}
     </div>
   );
 };

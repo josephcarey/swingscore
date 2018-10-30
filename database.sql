@@ -138,11 +138,11 @@ VALUES
 	(1, 23, 'follow'),
 	(1, 24, 'follow'),
 	-- Judges
-	(1, 24, 'judge'),
 	(1, 25, 'judge'),
 	(1, 26, 'judge'),
 	(1, 27, 'judge'),
-	(1, 28, 'judge')
+	(1, 28, 'judge'),
+	(1, 29, 'judge')
 ;
 
 INSERT INTO "couple" ("contest_id", "lead_id", "follow_id")
