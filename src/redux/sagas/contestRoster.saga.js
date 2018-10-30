@@ -5,7 +5,7 @@ function* fetchContestRoster(action) {
   try {
     const rosterFromServer = yield call(axios, {
       method: "GET",
-      url: `/api/score/${action.payload}`,
+      url: `/api/contest/roster/${action.payload}`,
     });
     yield put({ type: "SET_CONTEST_ROSTER", payload: rosterFromServer.data });
   } catch (error) {
