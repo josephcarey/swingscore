@@ -7,7 +7,7 @@ function* fetchContestRoster(action) {
       method: "GET",
       url: `/api/score/${action.payload}`,
     });
-    yield put({ type: "SET_CONTEST_RESULTS", payload: rosterFromServer.data });
+    yield put({ type: "SET_CONTEST_ROSTER", payload: rosterFromServer.data });
   } catch (error) {
     console.log("Error with getting the results:");
     console.log(error);
@@ -16,7 +16,7 @@ function* fetchContestRoster(action) {
 }
 
 function* contestRosterSaga() {
-  yield takeLatest("FETCH_CONTEST_RESULTS", fetchContestRoster);
+  yield takeLatest("FETCH_CONTEST_ROSTER", fetchContestRoster);
 }
 
 export default contestRosterSaga;

@@ -2,28 +2,16 @@ const express = require("express");
 const pool = require("../modules/pool");
 const router = express.Router();
 
-/**
- * GET route template
- */
-router.get("/:id", (req, res) => {
-  console.log(req.params);
+const contestListRouter = require("./contestList.router");
+const contestRosterRouter = require("./contestRoster.router");
+const contestCouplesRouter = require("./contestCouples.router");
+const contestResultsRouter = require("./contestResults.router");
+const contestScoreRouter = require("./contestScore.router");
 
-  pool
-    .query(
-      `
-        SELECT * FROM "contest"
-        WHERE "event_id" = $1
-    `,
-      [req.params.id]
-    )
-    .then(results => {
-      res.send(results.rows);
-    });
-});
-
-/**
- * POST route template
- */
-router.post("/", (req, res) => {});
+router.use("/list", contestListRouter);
+router.use("/roster", contestRosterRouter);
+router.use("/couples", contestCouplesRouter);
+router.use("/results", contestResultsRouter);
+router.use("/score", contestScoreRouter);
 
 module.exports = router;

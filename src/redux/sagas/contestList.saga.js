@@ -5,7 +5,7 @@ function* fetchContestList(action) {
   try {
     const contestsFromServer = yield call(axios, {
       method: "GET",
-      url: `/api/contest/${action.payload}`,
+      url: `/api/contest/list/${action.payload}`,
     });
     yield put({ type: "SET_CONTEST_LIST", payload: contestsFromServer.data });
   } catch (error) {
