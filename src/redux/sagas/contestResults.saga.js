@@ -5,7 +5,7 @@ function* fetchContestResults(action) {
   try {
     const resultsFromServer = yield call(axios, {
       method: "GET",
-      url: `/api/score/${action.payload}`,
+      url: `/api/score/results/${action.payload}`,
     });
     yield put({ type: "SET_CONTEST_RESULTS", payload: resultsFromServer.data });
   } catch (error) {

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import MyHeading from "../MyHeading/MyHeading";
+import MySubHeading from "../MySubHeading/MySubHeading";
 import MyList from "../MyList/MyList";
 
 class ViewSelectEvent extends Component {
@@ -13,12 +15,9 @@ class ViewSelectEvent extends Component {
   render() {
     return (
       <>
-        <MyList
-          heading={"swingscore"}
-          subheading={"Select an event"}
-          list={this.props.eventList}
-          handleClick={this.selectEvent}
-        />
+        <MyHeading text={"swingscore"} />
+        <MySubHeading text={"Select an event"} />
+        <MyList list={this.props.eventList} handleClick={this.selectEvent} />
       </>
     );
   }

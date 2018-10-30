@@ -1,4 +1,13 @@
-const contestResultsReducer = (state = [], action) => {
+const startingResults = [
+  {
+    lead: { username: "" },
+    follow: { username: "" },
+    judgePlacements: [],
+    calculatedPlacements: [],
+  },
+];
+
+const contestResultsReducer = (state = startingResults, action) => {
   switch (action.type) {
     case "SET_CONTEST_RESULTS":
       return action.payload;

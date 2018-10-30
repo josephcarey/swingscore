@@ -6,7 +6,7 @@ import navigateSaga from "./navigateSaga";
 import eventListSaga from "./eventList.saga";
 import contestListSaga from "./contestList.saga";
 import contestResultsSaga from "./contestResults.saga";
-import contestDetailsSaga from "./contestDetailsSaga";
+import contestRosterSaga from "./contestRoster.saga";
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -24,6 +24,6 @@ export default function* rootSaga() {
     eventListSaga(),
     contestListSaga(),
     contestResultsSaga(),
-    contestDetailsSaga(),
+    contestRosterSaga(),
   ]);
 }

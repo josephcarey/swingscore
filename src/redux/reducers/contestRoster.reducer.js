@@ -1,3 +1,11 @@
+const startingRoster = [
+  {
+    leads: [],
+    follows: [],
+    judges: [],
+  },
+];
+
 const contestRosterReducer = (state = {}, action) => {
   switch (action.type) {
     case "SET_CONTEST_ROSTER":

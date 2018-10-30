@@ -7,6 +7,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab/";
 
+import ResultsTable from "../ResultsTable/ResultsTable";
+
 const styles = theme => ({
   heading: {
     padding: 16,
@@ -23,7 +25,7 @@ const styles = theme => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
-    margin: `${theme.spacing.unit}px 0`,
+    // margin: `${theme.spacing.unit}px 0`,
     background: theme.palette.background.default,
   },
 });
@@ -75,12 +77,11 @@ class ViewResults extends Component {
           </ToggleButtonGroup>
         </div>
 
-        {this.state.typeOfView === "table" && <p>TableView</p>}
+        {this.state.typeOfView === "table" && (
+          <ResultsTable results={this.props.contestResults} />
+        )}
         {this.state.typeOfView === "byCouple" && <p>byCouple</p>}
         {this.state.typeOfView === "byJudge" && <p>byJudge</p>}
-
-        <pre>{JSON.stringify(this.state, null, 2)}</pre>
-        <pre>{JSON.stringify(this.props, null, 2)}</pre>
       </div>
     );
   }
