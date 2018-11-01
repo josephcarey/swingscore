@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import Modal from "@material-ui/core/Modal";
-import Button from "@material-ui/core/Button";
+import MyButton from "../MyButton/MyButton";
 
 const styles = theme => ({
   paper: {
@@ -11,23 +10,29 @@ const styles = theme => ({
     left: "50%",
     transform: `translate(-50%, -50%)`,
     position: "absolute",
-    width: theme.spacing.unit * 50,
+    width: "85vw",
+    // minWidth: "80vw",
+    // width: theme.spacing.unit * 50,
+    height: "80vh",
+    overflowY: "auto",
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
   },
 });
 
-class SimpleModal extends React.Component {
+class ModalStandard extends React.Component {
   state = {
     open: false,
   };
 
   handleOpen = () => {
+    this.props.onOpen && this.props.onOpen();
     this.setState({ open: true });
   };
 
   handleClose = () => {
+    this.props.onClose && this.props.onClose();
     this.setState({ open: false });
   };
 
@@ -35,7 +40,7 @@ class SimpleModal extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        <Button onClick={this.handleOpen}>Open Modal</Button>
+        <MyButton onClick={this.handleOpen}>{this.props.buttonText}</MyButton>
         <Modal open={this.state.open} onClose={this.handleClose}>
           <div className={classes.paper}>{this.props.children}</div>
         </Modal>
@@ -44,8 +49,8 @@ class SimpleModal extends React.Component {
   }
 }
 
-SimpleModal.propTypes = {
+ModalStandard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleModal);
+export default withStyles(styles)(ModalStandard);

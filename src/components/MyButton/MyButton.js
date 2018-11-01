@@ -14,7 +14,7 @@ const styles = theme => ({
   },
 });
 
-const RosterAddButton = props => {
+const MyButton = props => {
   const { classes } = props;
   return (
     <Button
@@ -28,8 +28,8 @@ const RosterAddButton = props => {
   );
 };
 
-RosterAddButton.propTypes = {
+MyButton.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(RosterAddButton);
+export default withStyles(styles)(MyButton);
