@@ -6,6 +6,9 @@ import MySubHeading from "../MySubHeading/MySubHeading";
 import MyList from "../MyList/MyList";
 import RosterAddButton from "../RosterAddButton/RosterAddButton";
 
+import SimpleModal from "../SimpleModal/SimpleModal";
+import ModalAddLead from "../ModalAddLead/ModalAddLead";
+
 class ViewRoster extends Component {
   componentDidMount() {
     this.props.dispatch({
@@ -17,22 +20,26 @@ class ViewRoster extends Component {
   render() {
     return (
       <div>
-        <MyHeading text={this.props.selectedContest.name} />
-        <MySubHeading text={"Leads"} />
+        <SimpleModal>Cool!</SimpleModal>
+        <MyHeading>{this.props.selectedContest.name}</MyHeading>
+        <MySubHeading>Leads</MySubHeading>
         <MyList
           people
           list={this.props.contestRoster.leads}
           // handleClick={this.selectContest}
         />
         <RosterAddButton>Add Lead</RosterAddButton>
-        <MySubHeading text={"Follows"} />
+        <ModalAddLead />
+        {/* <ModalAddToRole role={"lead"} /> */}
+
+        <MySubHeading>Follows</MySubHeading>
         <MyList
           people
           list={this.props.contestRoster.follows}
           // handleClick={this.selectContest}
         />
         <RosterAddButton>Add Follow</RosterAddButton>
-        <MySubHeading text={"Judges"} />
+        <MySubHeading>Judges</MySubHeading>
         <MyList
           people
           list={this.props.contestRoster.judges}

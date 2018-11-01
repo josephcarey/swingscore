@@ -22,7 +22,7 @@ const MySubHeading = props => {
   return (
     <div className={classes.root}>
       <Typography className={classes.subheading} variant="h6">
-        {props.text}
+        {props.children}
       </Typography>
     </div>
   );
@@ -30,7 +30,6 @@ const MySubHeading = props => {
 
 MySubHeading.propTypes = {
   classes: PropTypes.object.isRequired,
-  text: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(MySubHeading);

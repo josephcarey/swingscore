@@ -19,14 +19,13 @@ const MyHeading = props => {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <Typography variant="h4">{props.text}</Typography>
+      <Typography variant="h4">{props.children}</Typography>
     </div>
   );
 };
 
 MyHeading.propTypes = {
   classes: PropTypes.object.isRequired,
-  text: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(MyHeading);

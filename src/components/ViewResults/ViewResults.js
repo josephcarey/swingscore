@@ -1,34 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-
-import { Typography } from "@material-ui/core";
-import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab/";
-
+import MyHeading from "../MyHeading/MyHeading";
+import MySubHeading from "../MySubHeading/MySubHeading";
+import MyButtonGroup from "../MyButtonGroup/MyButtonGroup";
 import ResultsTable from "../ResultsTable/ResultsTable";
-
-const styles = theme => ({
-  heading: {
-    padding: 16,
-  },
-  subheading: {
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingTop: 8,
-    paddingBottom: 8,
-  },
-  toggleContainer: {
-    height: 56,
-    padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    // margin: `${theme.spacing.unit}px 0`,
-    background: theme.palette.background.default,
-  },
-});
 
 class ViewResults extends Component {
   state = {
@@ -57,25 +33,17 @@ class ViewResults extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <div className={classes.heading}>
-          <Typography variant="h4">{this.props.selectedEvent.name}</Typography>
-        </div>
-        <div className={classes.subheading}>
-          <Typography variant="h5">
-            {this.props.selectedContest.name}
-          </Typography>
-        </div>
-        <div className={classes.toggleContainer}>
-          <ToggleButtonGroup
-            value={this.state.typeOfView}
-            exclusive
-            onChange={this.handleButtonGroupChange}
-          >
-            <ToggleButton value="table">Table</ToggleButton>
-            <ToggleButton value="byCouple">By Couple</ToggleButton>
-            <ToggleButton value="byJudge">By Judge</ToggleButton>
-          </ToggleButtonGroup>
-        </div>
+        <MyHeading>{this.props.selectedEvent.name}</MyHeading>
+        <MySubHeading>{this.props.selectedContest.name}</MySubHeading>
+        <MyButtonGroup
+          value={this.state.typeOfView}
+          onChange={this.handleButtonGroupChange}
+          buttons={[
+            { value: "table", text: "Table" },
+            { value: "byCouple", text: "By Couple" },
+            { value: "byJudge", text: "By Judge" },
+          ]}
+        />
 
         {this.state.typeOfView === "table" && (
           <ResultsTable results={this.props.contestResults} />
@@ -95,8 +63,4 @@ const mapStateToProps = state => ({
   contestResults: state.contestResults,
 });
 
-ViewResults.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default connect(mapStateToProps)(withStyles(styles)(ViewResults));
+export default connect(mapStateToProps)(ViewResults);

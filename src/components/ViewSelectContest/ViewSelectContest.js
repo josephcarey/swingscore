@@ -20,8 +20,8 @@ class ViewSelectContest extends Component {
   render() {
     return (
       <>
-        <MyHeading text={this.props.selectedEvent.name} />
-        <MySubHeading text={"Select contest"} />
+        <MyHeading>{this.props.selectedEvent.name}</MyHeading>
+        <MySubHeading>Select contest</MySubHeading>
         <MyList
           list={this.props.contestList}
           handleClick={this.selectContest}

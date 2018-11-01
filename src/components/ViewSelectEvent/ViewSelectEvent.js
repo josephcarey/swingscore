@@ -15,8 +15,8 @@ class ViewSelectEvent extends Component {
   render() {
     return (
       <>
-        <MyHeading text={"swingscore"} />
-        <MySubHeading text={"Select an event"} />
+        <MyHeading>swingscore</MyHeading>
+        <MySubHeading>Select an event</MySubHeading>
         <MyList list={this.props.eventList} handleClick={this.selectEvent} />
       </>
     );

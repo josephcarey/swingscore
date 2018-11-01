@@ -3,8 +3,6 @@ const pool = require("../modules/pool");
 const router = express.Router();
 
 router.get("/:id", (req, res) => {
-  console.log(req.params.id);
-
   pool
     .query(
       `
@@ -21,7 +19,6 @@ router.get("/:id", (req, res) => {
       [req.params.id]
     )
     .then(results => {
-      console.log("start rebuilding data");
       let allParticipants = results.rows;
       let toSend = { leads: [], follows: [], judges: [] };
 
@@ -41,7 +38,6 @@ router.get("/:id", (req, res) => {
             break;
         }
       }
-      console.log(toSend);
       res.send(toSend);
     });
 });
