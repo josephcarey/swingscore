@@ -4,11 +4,13 @@ import { connect } from "react-redux";
 import MyHeading from "../MyHeading/MyHeading";
 import MySubHeading from "../MySubHeading/MySubHeading";
 import MyList from "../MyList/MyList";
+import MyButton from "../MyButton/MyButton";
 import MyCenterButton from "../MyCenterButton/MyCenterButton";
 
 import ModalAddToRole from "../ModalAddToRole/ModalAddToRole";
 
 class ViewRoster extends Component {
+  state = {};
   componentDidMount() {
     this.getRoster();
   }
@@ -24,46 +26,9 @@ class ViewRoster extends Component {
     return (
       <div>
         <MyHeading>{this.props.selectedContest.name}</MyHeading>
-        <MySubHeading>Leads</MySubHeading>
-        <MyList
-          people
-          list={this.props.contestRoster.leads}
-          // handleClick={this.selectContest}
-        />
-        <ModalAddToRole
-          role={"lead"}
-          buttonText={"Add Lead"}
-          contest_id={this.props.selectedContest.id}
-          onClose={this.getRoster}
-        />
-
-        <MySubHeading>Follows</MySubHeading>
-        <MyList
-          people
-          list={this.props.contestRoster.follows}
-          // handleClick={this.selectContest}
-        />
-        <ModalAddToRole
-          role={"follow"}
-          buttonText={"Add Follow"}
-          contest_id={this.props.selectedContest.id}
-          onClose={this.getRoster}
-        />
-
-        <MySubHeading>Judges</MySubHeading>
-        <MyList
-          people
-          list={this.props.contestRoster.judges}
-          // handleClick={this.selectContest}
-        />
-        <ModalAddToRole
-          role={"judge"}
-          buttonText={"Add Judge"}
-          contest_id={this.props.selectedContest.id}
-          onClose={this.getRoster}
-        />
+        <MySubHeading>Couples</MySubHeading>
         <MyCenterButton disabled fixed>
-          Go!
+          Start Contest
         </MyCenterButton>
       </div>
     );

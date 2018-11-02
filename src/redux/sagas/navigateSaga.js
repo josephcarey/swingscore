@@ -27,6 +27,9 @@ function* NavigateTo(action) {
     case "judge":
       yield put({ type: "SET_CURRENT_PAGE", payload: action.payload });
       break;
+    case "couples":
+      yield put({ type: "SET_CURRENT_PAGE", payload: action.payload });
+      break;
     case "roster":
       yield put({ type: "SET_CURRENT_PAGE", payload: action.payload });
       break;

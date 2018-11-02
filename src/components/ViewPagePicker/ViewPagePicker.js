@@ -7,6 +7,7 @@ import ViewSelectEvent from "../ViewSelectEvent/ViewSelectEvent";
 import ViewSelectContest from "../ViewSelectContest/ViewSelectContest";
 import ViewResults from "../ViewResults/ViewResults";
 import ViewJudge from "../ViewJudge/ViewJudge";
+import ViewCouples from "../ViewCouples/ViewCouples";
 import ViewRoster from "../ViewRoster/ViewRoster";
 
 const ViewPagePicker = props => {
@@ -21,6 +22,7 @@ const ViewPagePicker = props => {
           {props.currentPage === "selectContest" && <ViewSelectContest />}
           {props.currentPage === "results" && <ViewResults />}
           {props.currentPage === "judge" && <ViewJudge />}
+          {props.currentPage === "couples" && <ViewCouples />}
           {props.currentPage === "roster" && <ViewRoster />}
           {/* <pre>{JSON.stringify(props, null, 2)}</pre> */}
         </>

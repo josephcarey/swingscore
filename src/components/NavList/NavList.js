@@ -68,6 +68,15 @@ const NavList = props => {
           button
           disabled={!props.selectedContest.id}
           onClick={() => {
+            props.navigateTo("couples");
+          }}
+        >
+          <ListItemText>Couples</ListItemText>
+        </ListItem>
+        <ListItem
+          button
+          disabled={!props.selectedContest.id}
+          onClick={() => {
             props.navigateTo("judge");
           }}
         >
