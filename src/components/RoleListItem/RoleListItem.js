@@ -33,7 +33,7 @@ const RoleListItem = props => {
       <ListItemText primary={props.person.username} />
       <ListItemSecondaryAction>
         <Checkbox
-          color={"primary"}
+          color={"secondary"}
           onChange={props.handleToggle(props.person.id)}
           checked={props.person.isRole}
         />

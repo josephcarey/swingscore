@@ -22,12 +22,13 @@ import {
   createMuiTheme,
   MuiThemeProvider,
 } from "@material-ui/core";
-import { blueGrey } from "@material-ui/core/colors/";
+import { blueGrey, pink } from "@material-ui/core/colors/";
 
 const theme = createMuiTheme({
   palette: {
     // type: "dark",
     primary: blueGrey,
+    secondary: pink,
   },
   typography: {
     useNextVariants: true,

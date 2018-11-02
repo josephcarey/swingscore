@@ -4,10 +4,8 @@ import { connect } from "react-redux";
 import MyHeading from "../MyHeading/MyHeading";
 import MySubHeading from "../MySubHeading/MySubHeading";
 import MyList from "../MyList/MyList";
-import MyButton from "../MyButton/MyButton";
+import MyCenterButton from "../MyCenterButton/MyCenterButton";
 
-import SimpleModal from "../SimpleModal/SimpleModal";
-import ModalAddLead from "../ModalAddLead/ModalAddLead";
 import ModalAddToRole from "../ModalAddToRole/ModalAddToRole";
 
 class ViewRoster extends Component {
@@ -64,6 +62,9 @@ class ViewRoster extends Component {
           contest_id={this.props.selectedContest.id}
           onClose={this.getRoster}
         />
+        <MyCenterButton disabled fixed>
+          Go!
+        </MyCenterButton>
       </div>
     );
   }

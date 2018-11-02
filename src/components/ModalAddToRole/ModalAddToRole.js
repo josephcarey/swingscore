@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 import ModalStandard from "../ModalStandard/ModalStandard";
 import RoleList from "../RoleList/RoleList";
+import MyCenterButton from "../MyCenterButton/MyCenterButton";
 
 class ModalAddToRole extends React.Component {
   state = {
@@ -64,18 +65,21 @@ class ModalAddToRole extends React.Component {
 
   render() {
     return (
-      <div>
-        <ModalStandard
-          buttonText={this.props.buttonText}
-          onOpen={this.getList}
-          onClose={this.submitUpdated}
-        >
-          <RoleList
-            people={this.state.people}
-            handleToggle={this.handleToggle}
-          />
-        </ModalStandard>
-      </div>
+      <>
+        <div>
+          <ModalStandard
+            buttonText={this.props.buttonText}
+            onOpen={this.getList}
+            onClose={this.submitUpdated}
+          >
+            <RoleList
+              people={this.state.people}
+              handleToggle={this.handleToggle}
+            />
+          <MyCenterButton>Set Leads</MyCenterButton>
+          </ModalStandard>
+        </div>
+      </>
     );
   }
 }
