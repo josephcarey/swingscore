@@ -8,7 +8,7 @@ import MyCenterButton from "../MyCenterButton/MyCenterButton";
 
 import ModalAddToRole from "../ModalAddToRole/ModalAddToRole";
 
-class ViewCouples extends Component {
+class ViewRoster extends Component {
   componentDidMount() {
     this.getRoster();
   }
@@ -32,7 +32,7 @@ class ViewCouples extends Component {
         />
         <ModalAddToRole
           role={"lead"}
-          buttonText={"Pick Leads"}
+          buttonText={"Add Lead"}
           contest_id={this.props.selectedContest.id}
           onClose={this.getRoster}
         />
@@ -45,7 +45,7 @@ class ViewCouples extends Component {
         />
         <ModalAddToRole
           role={"follow"}
-          buttonText={"Pick Follows"}
+          buttonText={"Add Follow"}
           contest_id={this.props.selectedContest.id}
           onClose={this.getRoster}
         />
@@ -58,7 +58,7 @@ class ViewCouples extends Component {
         />
         <ModalAddToRole
           role={"judge"}
-          buttonText={"Pick Judges"}
+          buttonText={"Add Judge"}
           contest_id={this.props.selectedContest.id}
           onClose={this.getRoster}
         />
@@ -77,4 +77,4 @@ const mapStateToProps = state => ({
   contestRoster: state.contestRoster,
 });
 
-export default connect(mapStateToProps)(ViewCouples);
+export default connect(mapStateToProps)(ViewRoster);
