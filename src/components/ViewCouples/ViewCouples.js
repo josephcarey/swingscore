@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
 
 import MyHeading from "../MyHeading/MyHeading";
 import MySubHeading from "../MySubHeading/MySubHeading";
@@ -18,7 +19,14 @@ class ViewRoster extends Component {
   getRoster = () => {
     this.props.dispatch({
       type: "FETCH_CONTEST_ROSTER",
-      payload: this.props.selectedContest.id,
+      payload: this.props.selectedContest.id
+    });
+  };
+
+  randomizeContest = () => {
+    axios({
+      method: "POST",
+      url: "/api/contest/couples/randomize/1"
     });
   };
 
@@ -27,8 +35,8 @@ class ViewRoster extends Component {
       <div>
         <MyHeading>{this.props.selectedContest.name}</MyHeading>
         <MySubHeading>Couples</MySubHeading>
-        <MyCenterButton disabled fixed>
-          Start Contest
+        <MyCenterButton fixed onClick={this.randomizeContest}>
+          Randomize
         </MyCenterButton>
       </div>
     );
@@ -39,7 +47,7 @@ const mapStateToProps = state => ({
   user: state.user,
   selectedEvent: state.selectedEvent,
   selectedContest: state.selectedContest,
-  contestRoster: state.contestRoster,
+  contestRoster: state.contestRoster
 });
 
 export default connect(mapStateToProps)(ViewRoster);
