@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import MyButton from "../MyButton/MyButton";
+import MyCenterButton from "../MyCenterButton/MyCenterButton";
 
 const styles = theme => ({
   paper: {
@@ -42,7 +43,12 @@ class ModalStandard extends React.Component {
       <div>
         <MyButton onClick={this.handleOpen}>{this.props.buttonText}</MyButton>
         <Modal open={this.state.open} onClose={this.handleClose}>
-          <div className={classes.paper}>{this.props.children}</div>
+          <div className={classes.paper}>
+            {this.props.children}
+            <MyCenterButton onClick={this.handleClose}>
+              {this.props.buttonText}
+            </MyCenterButton>
+          </div>
         </Modal>
       </div>
     );

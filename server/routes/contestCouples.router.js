@@ -117,7 +117,7 @@ router.post("/randomize/:id", (req, res) => {
       randomPartner = partnerFrom.splice(getRandomInt(partnerFrom.length), 1);
       let coupleToAdd = {
         [indexRole]: indexFrom[i],
-        [partnerFromRole]: randomPartner[0]
+        [partnerFromRole]: randomPartner[0],
       };
       couples.push(coupleToAdd);
     }

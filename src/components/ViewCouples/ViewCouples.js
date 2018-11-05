@@ -13,20 +13,43 @@ import ModalAddToRole from "../ModalAddToRole/ModalAddToRole";
 class ViewRoster extends Component {
   state = {};
   componentDidMount() {
-    this.getRoster();
+    this.getCouples();
   }
 
-  getRoster = () => {
+  getCouples = () => {
+    this.props.dispatch({
+      type: "FETCH_CONTEST_COUPLES",
+      payload: this.props.selectedContest.id,
+    });
     this.props.dispatch({
       type: "FETCH_CONTEST_ROSTER",
-      payload: this.props.selectedContest.id
+      payload: this.props.selectedContest.id,
     });
   };
 
   randomizeContest = () => {
     axios({
       method: "POST",
-      url: "/api/contest/couples/randomize/1"
+      url: "/api/contest/couples/randomize/1",
+    });
+  };
+
+  handleRandomizeClick = () => {
+    this.props.dispatch({
+      type: "MAKE_CONTEST_COUPLES",
+      payload: this.props.selectedContest.id,
+    });
+  };
+
+  handleStartClick = () => {
+    this.props.dispatch({
+      type: "START_CONTEST",
+      payload: this.props.selectedContest.id,
+    });
+
+    this.props.dispatch({
+      type: "NAVIGATE_TO",
+      payload: "judge",
     });
   };
 
@@ -35,8 +58,15 @@ class ViewRoster extends Component {
       <div>
         <MyHeading>{this.props.selectedContest.name}</MyHeading>
         <MySubHeading>Couples</MySubHeading>
-        <MyCenterButton fixed onClick={this.randomizeContest}>
-          Randomize
+
+        {this.props.contestRoster.leads[1] ? (
+          <MyButton disabled>Randomize</MyButton>
+        ) : (
+          <MyButton onClick={this.randomizeContest}>Randomize</MyButton>
+        )}
+
+        <MyCenterButton fixed onClick={this.handleStartClick}>
+          Start!
         </MyCenterButton>
       </div>
     );
@@ -47,7 +77,8 @@ const mapStateToProps = state => ({
   user: state.user,
   selectedEvent: state.selectedEvent,
   selectedContest: state.selectedContest,
-  contestRoster: state.contestRoster
+  contestRoster: state.contestRoster,
+  contestCouples: state.contestCouples,
 });
 
 export default connect(mapStateToProps)(ViewRoster);
