@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -16,6 +17,7 @@ import ImageIcon from "@material-ui/icons/Image";
 
 import MyHeading from "../MyHeading/MyHeading";
 import MySubHeading from "../MySubHeading/MySubHeading";
+import MyCenterButton from "../MyCenterButton/MyCenterButton";
 
 const styles = theme => ({
   myAvatar: {
@@ -107,7 +109,7 @@ class ViewJudge extends Component {
   handleSubmit = () => {
     axios({
       method: "POST",
-      url: "/api/score",
+      url: `/api/contest/score/`,
       data: this.state.items,
     })
       .then(() => {
@@ -116,6 +118,11 @@ class ViewJudge extends Component {
       .catch(error => {
         alert("Something went wrong submitting rankings.");
       });
+
+    this.props.dispatch({
+      type: "NAVIGATE_TO",
+      payload: "finalize",
+    });
   };
 
   render() {
@@ -123,6 +130,7 @@ class ViewJudge extends Component {
     return (
       <div>
         <MyHeading>Place Dancers</MyHeading>
+        <MySubHeading>Drag and drop to rank</MySubHeading>
         <DragDropContext onDragEnd={this.onDragEnd}>
           <List>
             <Droppable droppableId="droppable">
@@ -178,7 +186,9 @@ class ViewJudge extends Component {
             </Droppable>
           </List>
         </DragDropContext>
-        <Button onClick={this.handleSubmit}>Submit Rankings</Button>
+        <MyCenterButton fixed onClick={this.handleSubmit}>
+          Submit Rankings
+        </MyCenterButton>
       </div>
     );
   }
@@ -188,4 +198,13 @@ ViewJudge.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ViewJudge);
+const StyledViewJudge = withStyles(styles)(ViewJudge);
+
+const mapStateToProps = state => ({
+  user: state.user,
+  selectedEvent: state.selectedEvent,
+  selectedContest: state.selectedContest,
+  contestRoster: state.contestRoster,
+});
+
+export default connect(mapStateToProps)(StyledViewJudge);

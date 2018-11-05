@@ -24,6 +24,9 @@ function* NavigateTo(action) {
     case "results":
       yield put({ type: "SET_CURRENT_PAGE", payload: action.payload });
       break;
+    case "finalize":
+      yield put({ type: "SET_CURRENT_PAGE", payload: action.payload });
+      break;
     case "judge":
       yield put({ type: "SET_CURRENT_PAGE", payload: action.payload });
       break;

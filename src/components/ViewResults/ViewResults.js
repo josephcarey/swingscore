@@ -51,8 +51,8 @@ class ViewResults extends Component {
           onChange={this.handleButtonGroupChange}
           buttons={[
             { value: "table", text: "Table" },
-            { value: "byCouple", text: "By Couple" },
-            { value: "byJudge", text: "By Judge" },
+            // { value: "byCouple", text: "By Couple" },
+            // { value: "byJudge", text: "By Judge" },
           ]}
         />
 

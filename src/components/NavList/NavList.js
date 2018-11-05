@@ -86,6 +86,15 @@ const NavList = props => {
           button
           disabled={!props.selectedContest.id}
           onClick={() => {
+            props.navigateTo("finalize");
+          }}
+        >
+          <ListItemText>Finalize</ListItemText>
+        </ListItem>
+        <ListItem
+          button
+          disabled={!props.selectedContest.id}
+          onClick={() => {
             props.navigateTo("results");
           }}
         >

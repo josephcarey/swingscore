@@ -6,6 +6,7 @@ import ViewLoading from "../ViewLoading/ViewLoading";
 import ViewSelectEvent from "../ViewSelectEvent/ViewSelectEvent";
 import ViewSelectContest from "../ViewSelectContest/ViewSelectContest";
 import ViewResults from "../ViewResults/ViewResults";
+import ViewFinalize from "../ViewFinalize/ViewFinalize";
 import ViewJudge from "../ViewJudge/ViewJudge";
 import ViewCouples from "../ViewCouples/ViewCouples";
 import ViewRoster from "../ViewRoster/ViewRoster";
@@ -21,6 +22,7 @@ const ViewPagePicker = props => {
           {props.currentPage === "selectEvent" && <ViewSelectEvent />}
           {props.currentPage === "selectContest" && <ViewSelectContest />}
           {props.currentPage === "results" && <ViewResults />}
+          {props.currentPage === "finalize" && <ViewFinalize />}
           {props.currentPage === "judge" && <ViewJudge />}
           {props.currentPage === "couples" && <ViewCouples />}
           {props.currentPage === "roster" && <ViewRoster />}

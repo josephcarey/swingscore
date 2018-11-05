@@ -16,8 +16,6 @@ function* fetchContestCouples(action) {
 }
 
 function* randomizeContestCouples(action) {
-  console.log("randomize call:", action);
-
   try {
     yield call(axios, {
       method: "POST",
@@ -29,9 +27,35 @@ function* randomizeContestCouples(action) {
   }
 }
 
+function* startContest(action) {
+  try {
+    yield call(axios, {
+      method: "POST",
+      url: `/api/contest/start/${action.payload}`,
+    });
+    yield put({ type: "NAVIGATE_TO", payload: "judge" });
+  } catch (error) {
+    console.log("error:", error);
+  }
+}
+
+function* finalizeContest(action) {
+  try {
+    yield call(axios, {
+      method: "POST",
+      url: `/api/contest/finalize/${action.payload}`,
+    });
+    yield put({ type: "NAVIGATE_TO", payload: "results" });
+  } catch (error) {
+    console.log("error:", error);
+  }
+}
+
 function* contestCouplesSaga() {
   yield takeLatest("FETCH_CONTEST_COUPLES", fetchContestCouples);
   yield takeLatest("RANDOMIZE_CONTEST_COUPLES", randomizeContestCouples);
+  yield takeLatest("START_CONTEST", startContest);
+  yield takeLatest("FINALIZE_CONTEST", finalizeContest);
 }
 
 export default contestCouplesSaga;
