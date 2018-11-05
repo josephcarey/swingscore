@@ -1,86 +1,102 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+
+import { TextField, Typography } from "@material-ui/core/";
+
+import NavSpacer from "../NavSpacer/NavSpacer";
+import MyHeading from "../MyHeading/MyHeading";
+import MySubHeading from "../MySubHeading/MySubHeading";
+import MyButton from "../MyButton/MyButton";
 
 class LoginPage extends Component {
   state = {
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   };
 
-  login = (event) => {
+  login = event => {
     event.preventDefault();
 
     if (this.state.username && this.state.password) {
       this.props.dispatch({
-        type: 'LOGIN',
+        type: "LOGIN",
         payload: {
           username: this.state.username,
           password: this.state.password,
         },
       });
     } else {
-      this.props.dispatch({ type: 'LOGIN_INPUT_ERROR' });
+      this.props.dispatch({ type: "LOGIN_INPUT_ERROR" });
     }
-  } // end login
+  }; // end login
 
-  handleInputChangeFor = propertyName => (event) => {
+  handleInputChangeFor = propertyName => event => {
     this.setState({
       [propertyName]: event.target.value,
     });
-  }
+  };
 
   render() {
     return (
       <div>
+        <NavSpacer />
+        <NavSpacer />
+        <NavSpacer />
+
+        <Typography variant="h4" align="center">
+          Log In
+        </Typography>
         {this.props.errors.loginMessage && (
-          <h2
-            className="alert"
-            role="alert"
-          >
+          <MySubHeading align="center">
             {this.props.errors.loginMessage}
-          </h2>
+          </MySubHeading>
         )}
         <form onSubmit={this.login}>
-          <h1>Login</h1>
-          <div>
-            <label htmlFor="username">
-              Username:
-              <input
-                type="text"
-                name="username"
-                value={this.state.username}
-                onChange={this.handleInputChangeFor('username')}
-              />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="password">
-              Password:
-              <input
-                type="password"
-                name="password"
-                value={this.state.password}
-                onChange={this.handleInputChangeFor('password')}
-              />
-            </label>
-          </div>
-          <div>
-            <input
-              className="log-in"
-              type="submit"
-              name="submit"
-              value="Log In"
+          <div align="center">
+            <TextField
+              align="center"
+              id="standard-name"
+              label="Username"
+              // className={classes.textField}
+              value={this.state.username}
+              onChange={this.handleInputChangeFor("username")}
+              margin="normal"
             />
           </div>
+          <div align="center">
+            <TextField
+              align="center"
+              id="standard-name"
+              label="Password"
+              type="password"
+              // className={classes.textField}
+              value={this.state.password}
+              onChange={this.handleInputChangeFor("password")}
+              margin="normal"
+            />
+          </div>
+          {/* <input
+            visible="false"
+            className="register"
+            type="submit"
+            name="submit"
+            value="Register"
+          /> */}
+          <center />
         </form>
         <center>
-          <button
-            type="button"
-            className="link-button"
-            onClick={() => {this.props.dispatch({type: 'SET_TO_REGISTER_MODE'})}}
+          <NavSpacer />
+          <div>
+            <MyButton onClick={this.login}>Log In</MyButton>
+          </div>
+
+          <MyButton
+            onClick={() => {
+              this.props.dispatch({ type: "SET_TO_REGISTER_MODE" });
+            }}
           >
             Register
-          </button>
+          </MyButton>
         </center>
       </div>
     );

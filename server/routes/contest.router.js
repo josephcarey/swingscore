@@ -58,4 +58,23 @@ router.post("/finalize/:id", (req, res) => {
     });
 });
 
+router.post("/", (req, res) => {
+  pool
+    .query(
+      `
+      INSERT INTO "contest" ("name", "initials", "event_id")
+      VALUES ($1, $2, $3);
+    `,
+      [req.body.name, req.body.initials, req.body.event_id]
+    )
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch(error => {
+      console.log("Something went wrong:");
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;

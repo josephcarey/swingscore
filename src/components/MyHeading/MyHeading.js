@@ -11,14 +11,14 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 3,
     paddingBottom: theme.spacing.unit * 1,
     paddingLeft: theme.spacing.unit * 2,
-    paddingRight: theme.spacing.unit * 2
+    paddingRight: theme.spacing.unit * 2,
   },
   rootNoTop: {
     // paddingTop: theme.spacing.unit * 3,
     paddingBottom: theme.spacing.unit * 1,
     paddingLeft: theme.spacing.unit * 2,
-    paddingRight: theme.spacing.unit * 2
-  }
+    paddingRight: theme.spacing.unit * 2,
+  },
 });
 
 const MyHeading = props => {
@@ -31,7 +31,7 @@ const MyHeading = props => {
 };
 
 MyHeading.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(MyHeading);

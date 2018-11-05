@@ -5,15 +5,21 @@ import MyBackButton from "../MyBackButton/MyBackButton";
 import MyHeading from "../MyHeading/MyHeading";
 import MySubHeading from "../MySubHeading/MySubHeading";
 import MyList from "../MyList/MyList";
+import ModalAddContest from "../ModalAddContest/ModalAddContest";
 import MyButton from "../MyButton/MyButton";
 
 class ViewSelectContest extends Component {
   componentDidMount() {
+    this.getContests();
+  }
+
+  getContests = () => {
     this.props.dispatch({
       type: "FETCH_CONTEST_LIST",
       payload: this.props.selectedEvent.id,
     });
-  }
+  };
+
   selectContest = contest => {
     this.props.dispatch({ type: "SET_SELECTED_CONTEST", payload: contest });
     this.props.dispatch({ type: "NAVIGATE_TO", payload: "correctView" });
@@ -48,7 +54,11 @@ class ViewSelectContest extends Component {
           list={this.props.contestList}
           handleClick={this.selectContest}
         />
-        <MyButton onClick={this.handleAddContest}>Add Contest</MyButton>
+        <ModalAddContest
+          buttonText={"Add Contest"}
+          selectedEvent={this.props.selectedEvent}
+          onClose={this.getContests}
+        />
       </>
     );
   }
