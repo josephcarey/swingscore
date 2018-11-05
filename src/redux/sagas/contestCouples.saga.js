@@ -15,12 +15,15 @@ function* fetchContestCouples(action) {
   yield put({ type: "UNSET_LOADING" });
 }
 
-function* makeContestCouples(action) {
+function* randomizeContestCouples(action) {
+  console.log("randomize call:", action);
+
   try {
     yield call(axios, {
       method: "POST",
-      url: `/api/contest/couples/${action.payload}`,
+      url: `/api/contest/couples/randomize/${action.payload}`,
     });
+    yield put({ type: "FETCH_CONTEST_COUPLES", payload: action.payload });
   } catch (error) {
     console.log(error);
   }
@@ -28,7 +31,7 @@ function* makeContestCouples(action) {
 
 function* contestCouplesSaga() {
   yield takeLatest("FETCH_CONTEST_COUPLES", fetchContestCouples);
-  yield takeLatest("MAKE_CONTEST_COUPLES", makeContestCouples);
+  yield takeLatest("RANDOMIZE_CONTEST_COUPLES", randomizeContestCouples);
 }
 
 export default contestCouplesSaga;

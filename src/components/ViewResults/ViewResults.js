@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import MyBackButton from "../MyBackButton/MyBackButton";
 import MyHeading from "../MyHeading/MyHeading";
 import MySubHeading from "../MySubHeading/MySubHeading";
 import MyButtonGroup from "../MyButtonGroup/MyButtonGroup";
@@ -29,11 +30,21 @@ class ViewResults extends Component {
   handleButtonGroupChange = (event, typeOfView) =>
     this.setState({ typeOfView });
 
+  backButton = () => {
+    this.props.dispatch({
+      type: "NAVIGATE_TO",
+      payload: "selectContest",
+    });
+  };
+
   render() {
     const { classes } = this.props;
     return (
       <div>
-        <MyHeading>{this.props.selectedEvent.name}</MyHeading>
+        <MyBackButton onClick={this.backButton}>
+          Back to contest list
+        </MyBackButton>
+        <MyHeading noTopHeader>{this.props.selectedEvent.name}</MyHeading>
         <MySubHeading>{this.props.selectedContest.name}</MySubHeading>
         <MyButtonGroup
           value={this.state.typeOfView}

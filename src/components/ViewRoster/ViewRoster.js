@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import MyBackButton from "../MyBackButton/MyBackButton";
 import MyHeading from "../MyHeading/MyHeading";
 import MySubHeading from "../MySubHeading/MySubHeading";
 import MyList from "../MyList/MyList";
@@ -27,10 +28,20 @@ class ViewCouples extends Component {
     });
   };
 
+  backButton = () => {
+    this.props.dispatch({
+      type: "NAVIGATE_TO",
+      payload: "selectContest",
+    });
+  };
+
   render() {
     return (
       <div>
-        <MyHeading>{this.props.selectedContest.name}</MyHeading>
+        <MyBackButton onClick={this.backButton}>
+          Back to contest list
+        </MyBackButton>
+        <MyHeading noTopHeader>{this.props.selectedContest.name}</MyHeading>
         <MySubHeading>Leads</MySubHeading>
         <MyList
           people

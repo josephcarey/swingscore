@@ -1,14 +1,32 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 
+import {
+  Avatar,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+} from "@material-ui/core";
+
+import MyBackButton from "../MyBackButton/MyBackButton";
 import MyHeading from "../MyHeading/MyHeading";
 import MySubHeading from "../MySubHeading/MySubHeading";
 import MyList from "../MyList/MyList";
 import MyButton from "../MyButton/MyButton";
 import MyCenterButton from "../MyCenterButton/MyCenterButton";
 
-import ModalAddToRole from "../ModalAddToRole/ModalAddToRole";
+const styles = theme => ({
+  myAvatar: {
+    borderRadius: 10,
+    color: "#fff",
+    backgroundColor: theme.palette.primary.main,
+  },
+});
 
 class ViewRoster extends Component {
   state = {};
@@ -27,16 +45,9 @@ class ViewRoster extends Component {
     });
   };
 
-  randomizeContest = () => {
-    axios({
-      method: "POST",
-      url: "/api/contest/couples/randomize/1",
-    });
-  };
-
   handleRandomizeClick = () => {
     this.props.dispatch({
-      type: "MAKE_CONTEST_COUPLES",
+      type: "RANDOMIZE_CONTEST_COUPLES",
       payload: this.props.selectedContest.id,
     });
   };
@@ -53,17 +64,48 @@ class ViewRoster extends Component {
     });
   };
 
+  backButton = () => {
+    this.props.dispatch({
+      type: "NAVIGATE_TO",
+      payload: "roster",
+    });
+  };
+
   render() {
+    const { classes } = this.props;
     return (
       <div>
-        <MyHeading>{this.props.selectedContest.name}</MyHeading>
+        <MyBackButton onClick={this.backButton}>Back to roster</MyBackButton>
+        <MyHeading noTopHeader>{this.props.selectedContest.name}</MyHeading>
         <MySubHeading>Couples</MySubHeading>
 
-        {this.props.contestRoster.leads[1] ? (
-          <MyButton disabled>Randomize</MyButton>
-        ) : (
-          <MyButton onClick={this.randomizeContest}>Randomize</MyButton>
-        )}
+        <List>
+          {this.props.contestCouples.map((couple, index) => {
+            return (
+              <ListItem button key={couple.couple_id}>
+                <Avatar className={classes.myAvatar}>
+                  {index + 1}
+                  {/* <ImageIcon /> */}
+                </Avatar>
+                {/* <Avatar>
+            <ImageIcon />
+          </Avatar> */}
+                <ListItemText
+                  primary={
+                    couple.lead.username + "\n + " + couple.follow.username
+                  }
+                  // secondary={
+                  //   item.lead.bib_number +
+                  //   "\n + " +
+                  //   item.follow.bib_number
+                  // }
+                />
+              </ListItem>
+            );
+          })}
+        </List>
+
+        <MyButton onClick={this.handleRandomizeClick}>Randomize</MyButton>
 
         <MyCenterButton fixed onClick={this.handleStartClick}>
           Start!
@@ -81,4 +123,9 @@ const mapStateToProps = state => ({
   contestCouples: state.contestCouples,
 });
 
-export default connect(mapStateToProps)(ViewRoster);
+ViewRoster.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+const styledViewRoster = withStyles(styles)(ViewRoster);
+export default connect(mapStateToProps)(styledViewRoster);

@@ -20,12 +20,14 @@ CREATE TABLE "person" (
 
 CREATE TABLE "event" (
 	"id" SERIAL PRIMARY KEY,
-	"name" VARCHAR (255)
+	"name" VARCHAR (255),
+	"initials" VARCHAR(10)
 );
 
 CREATE TABLE "contest" (
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR (255),
+	"initials" VARCHAR(10),
 	"has_started" BOOLEAN DEFAULT FALSE,
 	"has_ended" BOOLEAN DEFAULT FALSE,
 	"event_id" INTEGER REFERENCES "event"
@@ -55,21 +57,21 @@ CREATE TABLE "score" (
 );
 
 -- Add test data
-INSERT INTO "event" ("name")
-VALUES ('Michigan Classic'),
-('Spotlight'),
-('SWINGesota Summer Spectacular');
+INSERT INTO "event" ("name", "initials")
+VALUES ('Michigan Classic', 'MC'),
+('Spotlight', 'S'),
+('SWINGesota Summer Spectacular', 'SS'),
+('SWINGesota Winter Workshop Weekend', 'WW');
 
-INSERT INTO "contest" ("name", "event_id")
+INSERT INTO "contest" ("name", "initials", "event_id")
 VALUES
-	('Intermediate JJ', 1),
-	('Intermediate SS', 1),
-		('Novice JJ', 2),
-	('Newcomer JJ', 2),
-	('Newcomer SS', 2),
-	('Role Swap', 3),
-	('Blindfold', 3),
-	('On Fire', 3);
+	('Intermediate JJ', 'JJ', 1),
+	('Intermediate SS', 'SS', 1),
+		('Novice JJ', 'JJ', 2),
+	('Newcomer JJ', 'JJ', 2),
+	('Newcomer SS', 'SS', 2),
+	('Role Swap', 'RS', 3),
+	('Blindfold','B', 3);
 
 
 INSERT INTO "person" ("username", "password")
@@ -108,41 +110,41 @@ VALUES
 	('Nelson', 'a')
 ;
 
-INSERT INTO "person_contest" ("contest_id", "person_id", "role")
+INSERT INTO "person_contest" ("contest_id", "person_id", "role", "bib_number")
 VALUES
 	-- Leads
-	(1, 1, 'lead'),
-	(1, 2, 'lead'),
-	(1, 3, 'lead'),
-	(1, 4, 'lead'),
-	(1, 5, 'lead'),
-	(1, 6, 'lead'),
-	(1, 7, 'lead'),
-	(1, 8, 'lead'),
-	(1, 9, 'lead'),
-	(1, 10, 'lead'),
-	(1, 11, 'lead'),
-	(1, 12, 'lead'),
+	(1, 1, 'lead', 101),
+	(1, 2, 'lead', 112),
+	(1, 3, 'lead', 126),
+	(1, 4, 'lead', 133),
+	(1, 5, 'lead', 152),
+	(1, 6, 'lead', 153),
+	(1, 7, 'lead', 167),
+	(1, 8, 'lead', 171),
+	(1, 9, 'lead', 188),
+	(1, 10, 'lead', 191),
+	(1, 11, 'lead', 201),
+	(1, 12, 'lead', 202),
 	-- Follows
-	(1, 12, 'follow'),
-	(1, 13, 'follow'),
-	(1, 14, 'follow'),
-	(1, 15, 'follow'),
-	(1, 16, 'follow'),
-	(1, 17, 'follow'),
-	(1, 18, 'follow'),
-	(1, 19, 'follow'),
-	(1, 20, 'follow'),
-	(1, 21, 'follow'),
-	(1, 22, 'follow'),
-	(1, 23, 'follow'),
-	(1, 24, 'follow'),
+	(1, 12, 'follow', 107),
+	(1, 13, 'follow', 118),
+	(1, 14, 'follow', 119),
+	(1, 15, 'follow', 132),
+	(1, 16, 'follow', 145),
+	(1, 17, 'follow', 146),
+	(1, 18, 'follow', 147),
+	(1, 19, 'follow', 158),
+	(1, 20, 'follow', 161),
+	(1, 21, 'follow', 175),
+	(1, 22, 'follow', 182),
+	(1, 23, 'follow', 185),
+	(1, 24, 'follow', 193),
 	-- Judges
-	(1, 25, 'judge'),
-	(1, 26, 'judge'),
-	(1, 27, 'judge'),
-	(1, 28, 'judge'),
-	(1, 29, 'judge')
+	(1, 25, 'judge', 1),
+	(1, 26, 'judge', 2),
+	(1, 27, 'judge', 3),
+	(1, 28, 'judge', 4),
+	(1, 29, 'judge', 5)
 ;
 
 INSERT INTO "couple" ("contest_id", "lead_id", "follow_id")
@@ -229,102 +231,3 @@ VALUES
 	(29,11,8),
 	(29,12,12)
 ;
-
-
-
--- SELECT TRIALS
-SELECT 
-	"person"."id",
-	"person"."username",
-	"person"."img_path"
-FROM "person"
-JOIN "person_contest" ON "person"."id" = "person_contest"."person_id"
-JOIN "contest" ON "person_contest"."contest_id" = "contest"."id"
-WHERE "contest"."id" = 1 AND "person_contest"."role" = 'judge';
-
-SELECT
-	"contest"."id",
-	"contest"."name",
-	json_agg((SELECT x FROM (
-	SELECT
-		"person"."id",
-		"person"."username",
-		"person"."img_path"
-		WHERE "person_contest"."role" = 'lead' AND "contest"."id" = 1
-	) AS x)) AS "leads",
-	json_agg((SELECT x FROM (
-	SELECT
-		"person"."id",
-		"person"."username",
-		"person"."img_path"
-		WHERE "person_contest"."role" = 'follow' AND "contest"."id" = 1
-	) AS x)) AS "follows",
-	json_agg((SELECT x FROM (
-	SELECT
-		"person"."id",
-		"person"."username",
-		"person"."img_path"
-		WHERE "person_contest"."role" = 'judge'
-
-	) AS x)) AS "judges"
-FROM "person"
-LEFT JOIN "person_contest" ON "person"."id" = "person_contest"."person_id"
-LEFT JOIN "contest" ON "person_contest"."contest_id" = "contest"."id"
-WHERE "contest"."id" = 1
-GROUP BY "contest"."id";
-
-SELECT
-	"event".*,
-	json_agg((SELECT x FROM (
-	SELECT
-		"contest"."id",
-		"contest"."name",
-		"event"."name" AS "event_name"
-	) AS x)) AS "contests"
-FROM "event"
-LEFT JOIN "contest" ON "event"."id" = "contest"."event_id"
-GROUP BY "event"."id";
-
-
-
-
-
-SELECT
-	"score"."id",
-	"score"."placement",
-	"score"."couple_id",
-	
-	to_json((SELECT x FROM (
-    	SELECT
-            "lead"."id",
-            "lead"."username",
-            "lead"."img_path"
-      	) AS x)) AS "lead",
-   	to_json((SELECT x FROM (
-      	SELECT
-            "follow"."id",
-            "follow"."username",
-            "follow"."img_path"
-        ) AS x)) AS "follow",
-   	to_json((SELECT x FROM (
-      	SELECT
-            "judge"."id",
-            "judge"."username",
-            "judge"."img_path"
-        ) AS x)) AS "judge"
-FROM "score"
-JOIN "couple" ON "score"."couple_id" = "couple"."id"
-JOIN "person" "lead" ON "couple"."lead_id" = "lead"."id"
-JOIN "person" "follow" ON "couple"."follow_id" = "follow"."id"
-JOIN "person" "judge" ON "score"."judge_id" = "judge"."id"
-WHERE "couple"."contest_id" = 1
-GROUP BY "score"."id", "lead"."id", "follow"."id", "judge"."id";
-
-
-
-SELECT
-	array_agg("score")
-	FROM "couple"
-	JOIN "score" ON "score".couple_id = couple.id
-	GROUP BY "score".id;
-

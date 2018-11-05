@@ -118,23 +118,6 @@ class ViewJudge extends Component {
       });
   };
 
-  handleGetResults = () => {
-    let competitionToGet = 1;
-
-    axios({
-      method: "GET",
-      url: `/api/score/results/${competitionToGet}`,
-    })
-      .then(response => {
-        console.log(response.data);
-        this.setState({ results: response.data });
-      })
-      .catch(error => {
-        alert("Something went wrong getting the final results.");
-        console.log(error);
-      });
-  };
-
   render() {
     const { classes } = this.props;
     return (
@@ -178,6 +161,11 @@ class ViewJudge extends Component {
                                 "\n + " +
                                 item.follow.username
                               }
+                              // secondary={
+                              //   item.lead.bib_number +
+                              //   "\n + " +
+                              //   item.follow.bib_number
+                              // }
                             />
                           </ListItem>
                         </div>
