@@ -4,12 +4,14 @@ import { connect } from "react-redux";
 import MyHeading from "../MyHeading/MyHeading";
 import MySubHeading from "../MySubHeading/MySubHeading";
 import MyList from "../MyList/MyList";
+import MyButton from "../MyButton/MyButton";
+import MyBackButton from "../MyBackButton/MyBackButton";
 
 class ViewSelectContest extends Component {
   componentDidMount() {
     this.props.dispatch({
       type: "FETCH_CONTEST_LIST",
-      payload: this.props.selectedEvent.id,
+      payload: this.props.selectedEvent.id
     });
   }
   selectContest = contest => {
@@ -17,15 +19,27 @@ class ViewSelectContest extends Component {
     this.props.dispatch({ type: "NAVIGATE_TO", payload: "correctView" });
   };
 
+  handleAddContest = () => {
+    console.log("clicked");
+  };
+
+  backClick = () => {
+    console.log("clicked");
+  };
+
   render() {
     return (
       <>
-        <MyHeading>{this.props.selectedEvent.name}</MyHeading>
+        <MyBackButton>Back to event list</MyBackButton>
+        {/* <a>Back to event list</a> */}
+        {/* <a onClick={this.backClick}>Back to event list</a> */}
+        <MyHeading noTopHeader>{this.props.selectedEvent.name}</MyHeading>
         <MySubHeading>Select contest</MySubHeading>
         <MyList
           list={this.props.contestList}
           handleClick={this.selectContest}
         />
+        <MyButton onClick={this.handleAddContest}>Add Contest</MyButton>
       </>
     );
   }
@@ -35,7 +49,7 @@ const mapStateToProps = state => ({
   user: state.user,
   contestList: state.contestList,
   selectedEvent: state.selectedEvent,
-  selectedContest: state.selectedContest,
+  selectedContest: state.selectedContest
 });
 
 export default connect(mapStateToProps)(ViewSelectContest);

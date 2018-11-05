@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import {
   Avatar,
@@ -13,6 +16,14 @@ import ImageIcon from "@material-ui/icons/Image";
 
 import MyHeading from "../MyHeading/MyHeading";
 import MySubHeading from "../MySubHeading/MySubHeading";
+
+const styles = theme => ({
+  myAvatar: {
+    borderRadius: 10,
+    color: "#fff",
+    backgroundColor: theme.palette.primary.main,
+  },
+});
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -125,6 +136,7 @@ class ViewJudge extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
         <MyHeading>Place Dancers</MyHeading>
@@ -153,19 +165,19 @@ class ViewJudge extends Component {
                           )}
                         >
                           <ListItem button>
-                            <Avatar>
-                              <ImageIcon />
+                            <Avatar className={classes.myAvatar}>
+                              {index + 1}
+                              {/* <ImageIcon /> */}
                             </Avatar>
-                            <Avatar>
+                            {/* <Avatar>
                               <ImageIcon />
-                            </Avatar>
+                            </Avatar> */}
                             <ListItemText
                               primary={
                                 item.lead.username +
-                                " + " +
+                                "\n + " +
                                 item.follow.username
                               }
-                              secondary="Cool text could go here"
                             />
                           </ListItem>
                         </div>
@@ -179,11 +191,13 @@ class ViewJudge extends Component {
           </List>
         </DragDropContext>
         <Button onClick={this.handleSubmit}>Submit Rankings</Button>
-        {/* <Button onClick={this.handleGetResults}>Get Results</Button> */}
-        {/* <pre>{JSON.stringify(this.state, null, 2)}</pre> */}
       </div>
     );
   }
 }
 
-export default ViewJudge;
+ViewJudge.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(ViewJudge);
