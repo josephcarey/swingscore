@@ -20,6 +20,13 @@ class ViewCouples extends Component {
     });
   };
 
+  continueButton = () => {
+    this.props.dispatch({
+      type: "NAVIGATE_TO",
+      payload: "couples",
+    });
+  };
+
   render() {
     return (
       <div>
@@ -62,8 +69,8 @@ class ViewCouples extends Component {
           contest_id={this.props.selectedContest.id}
           onClose={this.getRoster}
         />
-        <MyCenterButton disabled fixed>
-          Go!
+        <MyCenterButton fixed onClick={this.continueButton}>
+          To Couples
         </MyCenterButton>
       </div>
     );

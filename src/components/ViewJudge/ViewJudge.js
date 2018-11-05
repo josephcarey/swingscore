@@ -179,8 +179,8 @@ class ViewJudge extends Component {
           </List>
         </DragDropContext>
         <Button onClick={this.handleSubmit}>Submit Rankings</Button>
-        <Button onClick={this.handleGetResults}>Get Results</Button>
-        <pre>{JSON.stringify(this.state, null, 2)}</pre>
+        {/* <Button onClick={this.handleGetResults}>Get Results</Button> */}
+        {/* <pre>{JSON.stringify(this.state, null, 2)}</pre> */}
       </div>
     );
   }

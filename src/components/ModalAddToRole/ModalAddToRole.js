@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import ModalStandard from "../ModalStandard/ModalStandard";
 import MySubHeading from "../MySubHeading/MySubHeading";
 import RoleList from "../RoleList/RoleList";
-import MyCenterButton from "../MyCenterButton/MyCenterButton";
 
 class ModalAddToRole extends React.Component {
   state = {
@@ -78,7 +77,6 @@ class ModalAddToRole extends React.Component {
               people={this.state.people}
               handleToggle={this.handleToggle}
             />
-            <MyCenterButton>{this.props.buttonText}</MyCenterButton>
           </ModalStandard>
         </div>
       </>
