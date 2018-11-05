@@ -11,21 +11,27 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 3,
     paddingBottom: theme.spacing.unit * 1,
     paddingLeft: theme.spacing.unit * 2,
-    paddingRight: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2
   },
+  rootNoTop: {
+    // paddingTop: theme.spacing.unit * 3,
+    paddingBottom: theme.spacing.unit * 1,
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2
+  }
 });
 
 const MyHeading = props => {
   const { classes } = props;
   return (
-    <div className={classes.root}>
+    <div className={props.noTopHeader ? classes.rootNoTop : classes.root}>
       <Typography variant="h4">{props.children}</Typography>
     </div>
   );
 };
 
 MyHeading.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(MyHeading);

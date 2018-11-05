@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import {
   Avatar,
@@ -7,12 +10,20 @@ import {
   List,
   ListItem,
   ListItemText,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import ImageIcon from "@material-ui/icons/Image";
 
 import MyHeading from "../MyHeading/MyHeading";
 import MySubHeading from "../MySubHeading/MySubHeading";
+
+const styles = theme => ({
+  myAvatar: {
+    borderRadius: 10,
+    color: "#fff",
+    backgroundColor: theme.palette.primary.main
+  }
+});
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -34,7 +45,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   //   background: isDragging ? "lightgreen" : "grey",
 
   // styles we need to apply on draggables
-  ...draggableStyle,
+  ...draggableStyle
 });
 
 const getListStyle = isDraggingOver => ({
@@ -49,25 +60,25 @@ class ViewJudge extends Component {
     items: [
       {
         lead: {
-          username: "",
+          username: ""
         },
         follow: {
-          username: "",
-        },
-      },
-    ],
+          username: ""
+        }
+      }
+    ]
   };
 
   componentDidMount() {
     axios({
       method: "GET",
-      url: "/api/contest/couples/1",
+      url: "/api/contest/couples/1"
     })
       .then(response => {
         console.log(response);
 
         this.setState({
-          items: response.data,
+          items: response.data
         });
       })
       .catch(error => {
@@ -89,7 +100,7 @@ class ViewJudge extends Component {
     );
 
     this.setState({
-      items,
+      items
     });
   };
 
@@ -97,7 +108,7 @@ class ViewJudge extends Component {
     axios({
       method: "POST",
       url: "/api/score",
-      data: this.state.items,
+      data: this.state.items
     })
       .then(() => {
         alert("Rankings submitted successfully!");
@@ -112,7 +123,7 @@ class ViewJudge extends Component {
 
     axios({
       method: "GET",
-      url: `/api/score/results/${competitionToGet}`,
+      url: `/api/score/results/${competitionToGet}`
     })
       .then(response => {
         console.log(response.data);
@@ -125,6 +136,7 @@ class ViewJudge extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
         <MyHeading>Place Dancers</MyHeading>
@@ -153,19 +165,19 @@ class ViewJudge extends Component {
                           )}
                         >
                           <ListItem button>
-                            <Avatar>
-                              <ImageIcon />
+                            <Avatar className={classes.myAvatar}>
+                              {index + 1}
+                              {/* <ImageIcon /> */}
                             </Avatar>
-                            <Avatar>
+                            {/* <Avatar>
                               <ImageIcon />
-                            </Avatar>
+                            </Avatar> */}
                             <ListItemText
                               primary={
                                 item.lead.username +
-                                " + " +
+                                "\n + " +
                                 item.follow.username
                               }
-                              secondary="Cool text could go here"
                             />
                           </ListItem>
                         </div>
@@ -180,10 +192,14 @@ class ViewJudge extends Component {
         </DragDropContext>
         <Button onClick={this.handleSubmit}>Submit Rankings</Button>
         <Button onClick={this.handleGetResults}>Get Results</Button>
-        <pre>{JSON.stringify(this.state, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(this.state, null, 2)}</pre> */}
       </div>
     );
   }
 }
 
-export default ViewJudge;
+ViewJudge.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(ViewJudge);
